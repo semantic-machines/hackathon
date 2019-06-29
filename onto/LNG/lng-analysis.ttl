@@ -114,27 +114,33 @@ lng:DemandSupplyChartTemplate
     .then(function (mapIndividual) {
       var individuals = mapIndividual["lng:ObjectsOnMap"];
       var data = calcData(individuals);
-      self.drawDemandSupplyChart(data);
+      var chart = self.drawChart(data);
       
-      mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
-        var data = calcData(individuals);
-        self.DemandSupplyChart.config.data.datasets[0].data = data;
-        self.DemandSupplyChart.update();
+      mapIndividual.on("lng:ObjectsOnMap", updateChart);
+      template.one("remove", function () {
+        mapIndividual.off(updateChart);
+        chart.destroy();
       });
+
+      function updateChart(individuals) {
+        var data = calcData(individuals);
+        chart.config.data.datasets[0].data = data;
+        chart.update();
+      }
+      
+      function calcData(individuals) {
+        return individuals.reduce(function (integral, item) {
+          if (item.hasValue("rdf:type", "lng:LngDemand") && item.hasValue("v-s:amount")) {
+            integral[0] += item["v-s:amount"][0];
+          } else if (item.hasValue("rdf:type", "lng:LngSupply") && item.hasValue("v-s:amount")) {
+            integral[1] += item["v-s:amount"][0];
+          }
+          return integral;
+        }, [0, 0]);
+      }
     });
 
-  function calcData(individuals) {
-    return individuals.reduce(function (integral, item) {
-      if (item.hasValue("rdf:type", "lng:LngDemand") && item.hasValue("v-s:amount")) {
-        integral[0] += item["v-s:amount"][0];
-      } else if (item.hasValue("rdf:type", "lng:LngSupply") && item.hasValue("v-s:amount")) {
-        integral[1] += item["v-s:amount"][0];
-      }
-      return integral;
-    }, [0, 0]);
-  }
-
-  this.drawDemandSupplyChart = function (data) {
+  this.drawChart = function (data) {
     
     Chart.defaults.global.defaultFontSize = 14;
     var config = {
@@ -158,8 +164,9 @@ lng:DemandSupplyChartTemplate
 			}
 		};
 
-    var ctx = document.getElementById('demand-supply-chart').getContext('2d');
-    this.DemandSupplyChart = new Chart(ctx, config);
+    var ctx = $('#demand-supply-chart', template).get(0).getContext('2d');
+    var chart = new Chart(ctx, config);
+    return chart;
   };
 
   //# sourceURL=lng:DemandSupplyChartTemplate_post
@@ -211,7 +218,7 @@ lng:DevelopmentChartTemplate
 <div>
   <h3 class="text-center" about="@" property="rdfs:label"></h3>
   <div id="chart-holder" style="width:75%; margin: 0 auto;">
-    <canvas id="history-chart" width="200" height="200"></canvas>
+    <canvas id="development-chart" width="200" height="200"></canvas>
   </div>
 </div>
 <script>
@@ -228,90 +235,95 @@ lng:DevelopmentChartTemplate
     .then(function (mapIndividual) {
       var individuals = mapIndividual["lng:ObjectsOnMap"];
       var data = calcData(individuals);
-      self.drawDemandSupplyChart(data);
+      var chart = self.drawChart(data);
       
-      mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
-        var data = calcData(individuals);
-        self.DemandSupplyChart.config.data.datasets[0].data = data[0];
-        self.DemandSupplyChart.config.data.datasets[1].data = data[1];
-        self.DemandSupplyChart.config.data.datasets[2].data = data[2];
-        self.DemandSupplyChart.update();
+      mapIndividual.on("lng:ObjectsOnMap", updateChart);
+      template.one("remove", function () {
+        mapIndividual.off("lng:ObjectsOnMap", updateChart);
+        chart.destroy();
       });
+      
+      function updateChart(individuals) {
+        var data = calcData(individuals);
+        chart.config.data.datasets[0].data = data[0];
+        chart.config.data.datasets[1].data = data[1];
+        chart.config.data.datasets[2].data = data[2];
+        chart.update();
+      }
+
+      var baseYear = 2017;
+      var years = 5;
+      function calcData(individuals) {
+        return individuals.reduce(function (acc, item) {
+          var created = item.hasValue("v-s:created") ? item["v-s:created"][0].getFullYear() - baseYear : undefined;
+          var plan = item.hasValue("v-s:dateFromPlan") ? item["v-s:dateFromPlan"][0].getFullYear() - baseYear : undefined;
+          var fact = item.hasValue("v-s:dateFrom") ? item["v-s:dateFrom"][0].getFullYear() - baseYear : undefined;
+          var amount = item.hasValue("v-s:amount") ? item["v-s:amount"][0] : 0;
+          
+          var i;
+          if (created && !plan && !fact) {
+            acc[2][created] = (acc[2][created] || 0) + amount;
+          } else if (fact) {
+            for (i = fact; i < years; i++) {
+              acc[0][i] = (acc[0][i] || 0) + amount;
+            }
+          } else if (plan && !fact) {
+            for (i = plan; i < years; i++) {
+              acc[1][i] = (acc[1][i] || 0) + amount;
+            }
+          }
+          return acc;
+        }, [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]); // [fact, plan, expect]
+      }
     });
 
-  var baseYear = 2017;
-  var years = 5;
-  function calcData(individuals) {
-    return individuals.reduce(function (acc, item) {
-      var created = item.hasValue("v-s:created") ? item["v-s:created"][0].getFullYear() - baseYear : undefined;
-      var plan = item.hasValue("v-s:dateFromPlan") ? item["v-s:dateFromPlan"][0].getFullYear() - baseYear : undefined;
-      var fact = item.hasValue("v-s:dateFrom") ? item["v-s:dateFrom"][0].getFullYear() - baseYear : undefined;
-      var amount = item.hasValue("v-s:amount") ? item["v-s:amount"][0] : 0;
-      
-      var i;
-      if (created && !plan && !fact) {
-        acc[2][created] = (acc[2][created] || 0) + amount;
-      } else if (fact) {
-        for (i = fact; i < years; i++) {
-          acc[0][i] = (acc[0][i] || 0) + amount;
-        }
-      } else if (plan && !fact) {
-        for (i = plan; i < years; i++) {
-          acc[1][i] = (acc[1][i] || 0) + amount;
-        }
-      }
-      return acc;
-    }, [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]); // [fact, plan, expect]
-  }
-
-	var data = {
-		labels: ['2017', '2018', '2019', '2020', '2021'],
-		datasets: [{
-			label: 'Действует',
-			backgroundColor: self.chartColors.orange,
-			data: []
-		}, {
-			label: 'Запланировано',
-			backgroundColor: self.chartColors.yellow, 
-			data: []
-		}, {
-			label: 'Обсуждается',
-			backgroundColor: self.chartColors.gray,
-			data: []
-		}]
-	};
-
-  Chart.defaults.global.defaultFontSize = 14;
-  var config = {
-    type: 'bar',
-    data: data,
-    options: {
-      title: {
-        display: false,
-        text: 'История развития'
-      },
-      tooltips: {
-        mode: 'index',
-        intersect: false
-      },
-      responsive: true,
-      scales: {
-        xAxes: [{
-          stacked: true,
-        }],
-        yAxes: [{
-          stacked: true
+  this.drawChart = function (data) {
+    Chart.defaults.global.defaultFontSize = 14;
+    var config = {
+      type: 'bar',
+      data: {
+        labels: ['2017', '2018', '2019', '2020', '2021'],
+        datasets: [{
+          label: 'Действует',
+          backgroundColor: self.chartColors.orange,
+          data: []
+        }, {
+          label: 'Запланировано',
+          backgroundColor: self.chartColors.yellow, 
+          data: []
+        }, {
+          label: 'Обсуждается',
+          backgroundColor: self.chartColors.gray,
+          data: []
         }]
+      },
+      options: {
+        title: {
+          display: false,
+          text: 'История развития'
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
+        responsive: true,
+        scales: {
+          xAxes: [{
+            stacked: true,
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        }
       }
-    }
-  };
+    };
 
-  this.drawDemandSupplyChart = function (data) {
-    var ctx = document.getElementById('history-chart').getContext('2d');
+    var ctx = $('#development-chart', template).get(0).getContext('2d');
     config.data.datasets[0].data = data[0];
     config.data.datasets[1].data = data[1];
     config.data.datasets[2].data = data[2];
-    this.DemandSupplyChart = new Chart(ctx, config);
+    var chart = new Chart(ctx, config);
+    return chart;
   };
 
   //# sourceURL=lng:DevelopmentChartTemplate_post

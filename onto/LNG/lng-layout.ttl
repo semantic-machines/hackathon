@@ -95,8 +95,8 @@ lng:LayoutTemplate
       </div>
       <ul class="nav navbar-nav">
         <li><a id="user-info"></a></li>
-        <li id="sign-in"><a href="#"><i class="fa fa-lg fa-sign-in"></i> <span about="lng:SignIn" property="rdfs:label"></span></a></li>
-        <li id="sign-out"><a href="#"><i class="fa fa-lg fa-sign-out"></i> <span about="lng:SignOut" property="rdfs:label"></span></a></li>
+        <li id="sign-in"><a style="cursor:pointer"><i class="fa fa-lg fa-sign-in"></i> <span about="lng:SignIn" property="rdfs:label"></span></a></li>
+        <li id="sign-out"><a style="cursor:pointer"><i class="fa fa-lg fa-sign-out"></i> <span about="lng:SignOut" property="rdfs:label"></span></a></li>
         <!--li about="v-ui:AvailableLanguage" data-template="v-ui:LanguageSwitchTemplate" data-switch-behavior="radio"></li-->
       </ul>
     </nav>
