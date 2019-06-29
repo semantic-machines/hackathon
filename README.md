@@ -5,5 +5,4 @@
 Linux ubuntu 18.04:
 
 1. создать папку hackathon (название папки не фиксированно и может быть иным) и зайти в нее
-2. скачать файл cо скриптом установки install.sh
-3. запустить ./install.sh
+2. curl https://raw.githubusercontent.com/semantic-machines/hackathon/master/install.sh -sSf | sh
