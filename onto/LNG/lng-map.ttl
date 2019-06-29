@@ -73,9 +73,79 @@ lng:MapModel
       self.map.geoObjects.add(result.geoObjects);
 
       // preset: 'islands#circleIcon',
-      self.pointsCollection = new ymaps.GeoObjectCollection({}, {
-        iconColor: "#17a2b8"
+      // self.pointsCollection = new ymaps.Clusterer({
+      //   clusterIconLayout: 'default#pieChart'
+      // }, {
+      //   iconColor: "#17a2b8"
+      // });
+
+      self.pointsCollection = new ymaps.Clusterer({});
+      self.pointsCollection.createCluster = function (center, geoObjects) {
+        // Наследуем все поля класса.
+        var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
+        // Устанавливаем свойства кластера.
+        // if (geoObjects.length === 3) {
+        //   clusterPlacemark.
+        // }
+        var weights = geoObjects.reduce(function(result, current) {
+          if (current.properties.get("rdf:type") === "lng:LngDemand") {
+            result[0] = ++result[0];
+          } else if (current.properties.get("rdf:type") === "lng:LngSupply") {
+            result[1] = ++result[1];
+          } else {
+            result[2] = ++result[2];
+          }
+          return result;
+        }, [0, 0, 0]);
+        clusterPlacemark.properties.set({
+            // Данные для построения диаграммы.
+            data: [
+                { weight: weights[0], color: '#28a745' },
+                { weight: weights[1], color: '#dc3545' }, 
+                { weight: weights[2], color: '#17a2b8' }
+            ],
+            // Подпись к диаграмме.
+            iconCaption: 'Диаграмма кластера',
+        });
+
+        // Задаем опции кластера.
+        clusterPlacemark.options.set('iconLayout', 'default#pieChart');
+        clusterPlacemark.options.set('balloonContentLayout', 'cluster#balloonAccordion');
+        clusterPlacemark.options.set('balloonPanelContentLayout', 'cluster#balloonAccordion');
+        clusterPlacemark.options.set('balloonItemContentLayout', 'cluster#balloonAccordion');
+        // clusterPlacemark.options.set("balloonContentHeader", function() {
+        //   console.log(this);
+          
+        // });
+        clusterPlacemark.options.set('disableClickZoom', true);
+        clusterPlacemark.options.set('openBalloonOnClick', true);
+        clusterPlacemark.options.set('balloonLeftColumnWidth', 60);
+        clusterPlacemark.options.set('balloonPanelMaxMapArea', 0);
+        clusterPlacemark.options.set('balloonContentLayoutHeight', 200);
+        clusterPlacemark.options.set('balloonContentLayoutWidth', 300);
+        return clusterPlacemark;
+      };
+
+      self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
+        var target = e.get('target');
+        var type = e.get('type');
+        if (typeof target.getGeoObjects != 'undefined') {
+          // Событие произошло на кластере.
+          if (type == 'mouseenter') {
+              target.options.set('preset', 'islands#invertedPinkClusterIcons');
+          } else {
+              target.options.set('preset', 'islands#invertedVioletClusterIcons');
+          }
+        } else {
+          // Событие произошло на геообъекте.
+          if (type == 'mouseenter') {
+              target.options.set('preset', 'islands#pinkIcon');
+          } else {
+              target.options.set('preset', 'islands#violetIcon');
+          }
+        }
       });
+
       self.pointsCollection.events.add("click", function(e) {
         var target = e.get("target");
         self.changeActivePoint(self.pointsCollection, target);
@@ -110,7 +180,8 @@ lng:MapModel
         self.pointsCollection.add(point);
       });
     }).catch(function(err) {
-      console.log("Error in model.addNewPoints : "+ err);
+      console.log("Error in model.showPoints : "+ err);
+      console.log(err.stack);
     });
   };
 
@@ -124,6 +195,8 @@ lng:MapModel
     var query;
     if (queryString) {
       query = veda.Backend.geo_radius_query(veda.ticket, center[0], center[1], radius, queryString);
+      // console.log(self.map.getBounds());
+      // console.log(center[0], center[1], radius);
     } else {
       console.log("return []: queryString.length = " + queryString.length);
       return Promise.resolve([]);
@@ -159,17 +232,26 @@ lng:MapModel
   this.generatePoint = function(individ) {
     var coord = [individ["v-s:latitude"][0], individ["v-s:longitude"][0]];
     var icon;
+    var iconColor = "#17a2b8";
     if (individ.hasValue("rdf:type", "lng:StationaryFillingStation")) {
       icon = "islands#fuelStationCircleIcon";
     } else if (individ.hasValue("rdf:type", "lng:MobileFillingStation")) {
       icon = "islands#deliveryCircleIcon";
+    } else if (individ.hasValue("rdf:type", "lng:LngDemand")) {
+      icon = "islands#circleIcon";
+      iconColor = "#28a745";
+    } else if (individ.hasValue("rdf:type", "lng:LngSupply")) {
+      icon = "islands#circleIcon";
+      iconColor = "#dc3545";
     } else {
       icon = "islands#circleIcon";
     }
     return new ymaps.Placemark(coord, {
-      "@": individ.id
+      "@": individ.id,
+      "rdf:type": individ["rdf:type"][0].id
     }, {
-      preset: icon
+      preset: icon,
+      iconColor: iconColor
     });
   };
 
@@ -193,12 +275,12 @@ lng:MapModel
   };
 
   this.changeActivePoint = function(collection, target) {
-    var wasActive = collection.properties.get("activePoint");
-    if (wasActive !== target) {
-      if (wasActive) wasActive.options.set({iconColor: "#17a2b8"});
-      collection.properties.set({activePoint: target});
-      target.options.set({iconColor: "#007bff"});
-    }
+    // var wasActive = collection.options.get("activePoint");
+    // if (wasActive !== target) {
+    //   if (wasActive) wasActive.options.set({iconColor: "#17a2b8"});
+    //   collection.options.set({activePoint: target});
+    //   target.options.set({iconColor: "#007bff"});
+    // }
   };
 
   //# sourceURL=lng:MapModel
@@ -315,6 +397,7 @@ lng:MapFilter
   v-ui:hasModel lng:MapFilterModel;
   lng:hasFilteredTypes lng:StationaryFillingStation, lng:MobileFillingStation, lng:LngProductionComplex, lng:LngStorage, lng:LngSupply, lng:LngDemand;
   lng:hasFilteredStatus lng:StatusInOperation, lng:StatusDecided, lng:StatusUnderDiscussion;
+  lng:hasFilteredAnaliz lng:LngDemand, lng:LngSupply;
 .
 
 lng:hasFilteredTypes
@@ -331,7 +414,24 @@ lng:PsFilteredTypes_MapFilter
   v-ui:forProperty lng:hasFilteredTypes ;
   v-ui:minCardinality 0 ;
   v-ui:maxCardinality 100 ;
-  v-ui:queryPrefix "'rdfs:subClassOf' == 'lng:Station' || '@'==='lng:LngDemand' || '@'==='lng:LngSupply'" ;
+  v-ui:queryPrefix "'rdfs:subClassOf' == 'lng:Station'" ;
+.
+
+lng:hasFilteredAnaliz
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "Фильтры для анализа"@ru ;
+  rdfs:label "Analiz"@en ;
+  rdfs:range lng:Station ;
+  rdfs:domain rdfs:Resource;
+.
+
+lng:PsFilteredAnaliz_MapFilter
+  rdf:type v-ui:ObjectPropertySpecification ;
+  v-ui:forClass rdfs:Resource ;
+  v-ui:forProperty lng:hasFilteredAnaliz ;
+  v-ui:minCardinality 0 ;
+  v-ui:maxCardinality 2 ;
+  v-ui:queryPrefix "'@'==='lng:LngDemand' || '@'==='lng:LngSupply'" ;
 .
 
 lng:hasFilteredOrganization
@@ -406,18 +506,30 @@ lng:MapFilterTemplate
   rdfs:label "Map filter template"@en ;
   v-ui:template """
 <div>
-  <h5 class="section-header" about="lng:hasFilteredTypes" property="rdfs:label"></h5>
-  <veda-control rel="lng:hasFilteredTypes" data-type="checkbox" class="view edit -search"></veda-control>
+  <section id="FilteredType">
+    <h5 class="section-header" about="lng:hasFilteredTypes" property="rdfs:label"></h5>
+    <veda-control rel="lng:hasFilteredTypes" data-type="checkbox" class="view edit -search"></veda-control>
+  </section>
 
-  <h5 class="section-header" about="lng:hasFilteredOrganization" property="rdfs:label"></h5>
-  <div rel="lng:hasFilteredOrganization" class="view -edit search" data-template="v-ui:LabelTemplate"></div>
-  <veda-control rel="lng:hasFilteredOrganization" data-type="link" class="fulltext dropdown view edit -search"></veda-control>
+  <section id="FilteredAnaliz">
+    <h5 class="section-header" about="lng:hasFilteredAnaliz" property="rdfs:label"></h5>
+    <veda-control rel="lng:hasFilteredAnaliz" data-type="checkbox" class="view edit -search"></veda-control>
+  </section>
 
-  <h5 class="section-header" about="lng:hasFilteredStatus" property="rdfs:label"></h5>
-  <veda-control rel="lng:hasFilteredStatus" data-type="checkbox" class="view edit -search"></veda-control>  
+  <section id="FilteredOrganization">
+    <h5 class="section-header" about="lng:hasFilteredOrganization" property="rdfs:label"></h5>
+    <div rel="lng:hasFilteredOrganization" class="view -edit search" data-template="v-ui:LabelTemplate"></div>
+    <veda-control rel="lng:hasFilteredOrganization" data-type="link" class="fulltext dropdown view edit -search"></veda-control>
+  </section>
+
+  <section id="FilteredStatus">
+    <h5 class="section-header" about="lng:hasFilteredStatus" property="rdfs:label"></h5>
+    <veda-control rel="lng:hasFilteredStatus" data-type="checkbox" class="view edit -search"></veda-control>  
+  </section>
  
 </div>
 <script>
+  $()
   function filtered(){
     lngMap.showPoints(individual.generateQueryString(), undefined, undefined);
   }
