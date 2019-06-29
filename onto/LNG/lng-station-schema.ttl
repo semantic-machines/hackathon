@@ -61,6 +61,19 @@ lng:workMode
   rdfs:domain lng:Station ;
 .
 
+#------------------спецификации---------
+lng:PS_hasStatus_Lng
+  rdf:type v-ui:ObjectPropertySpecification ;
+  v-ui:forClass lng:Station ;
+  v-ui:forClass lng:LngDemand ;
+  v-ui:forClass lng:LngSupply ;
+  v-ui:forProperty v-s:hasStatus ;
+  v-ui:minCardinality 1 ;
+  v-ui:maxCardinality 1 ;
+  v-ui:queryPrefix "('@'=='lng:StatusInOperation' || '@'=='lng:StatusDecided' || '@'=='lng:StatusUnderDiscussion')"^^xsd:string ;
+  rdfs:label "Спецификация свойства v-s:hasStatus"@ru ;
+.
+
 #-------------------------------------------------------------
 lng:StationaryFillingStation
   rdf:type owl:Class ;
@@ -74,7 +87,7 @@ lng:StationaryFillingStation
 #v-s:latitude
 #v-s:longitude
 #v-s:postAddress
-#v-s:hasWorkMode (или текст)
+#v-s:workMode (или текст)
 #v-s:hasStatus
 #v-s:parentOrganization
 #v-s:hasPaymentForm
