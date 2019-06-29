@@ -73,17 +73,15 @@ lng:MapModel
       self.map.geoObjects.add(result.geoObjects);
 
       var customBalloonContentLayout = ymaps.templateLayoutFactory.createClass([
-            '<div class="list-group">',
-            // Выводим в цикле список всех геообъектов.
+            '<div class="list-group list-objects">',
             '{% for geoObject in properties.geoObjects %}',
+              '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
                 '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
+              '{% endif %}',
             '{% endfor %}',
             '</div>'
       ].join(''));
-      
-      // '{% if options.width > 200 %}' +
-      //   '{% include options.wideLayout %}' +
-      // '{% endif %}'
+
       self.pointsCollection = new ymaps.Clusterer({});
       self.pointsCollection.createCluster = function (center, geoObjects) {
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
@@ -121,6 +119,12 @@ lng:MapModel
         clusterPlacemark.options.set('balloonContentLayoutWidth', 300);
         return clusterPlacemark;
       };
+      self.pointsCollection.events.add('balloonopen', function (e) {
+        $("div.list-objects>a").click(function(event) {
+          var objectUri = event.target.getAttribute("href");
+          var modal = veda.Util.showModal(new veda.IndividualModel(objectUri), undefined, "view");
+        })
+      });
 
       // self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
       //   var target = e.get('target');
@@ -191,8 +195,6 @@ lng:MapModel
     var query;
     if (queryString) {
       query = veda.Backend.geo_radius_query(veda.ticket, center[0], center[1], radius, queryString);
-      // console.log(self.map.getBounds());
-      // console.log(center[0], center[1], radius);
     } else {
       console.log("return []: queryString.length = " + queryString.length);
       return Promise.resolve([]);
