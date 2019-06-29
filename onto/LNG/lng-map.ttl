@@ -80,6 +80,15 @@ lng:MapModel
       // });
 
       self.pointsCollection = new ymaps.Clusterer({});
+
+      var customBalloonContentLayout = ymaps.templateLayoutFactory.createClass([
+            '<div class="list-group">',
+            // Выводим в цикле список всех геообъектов.
+            '{% for geoObject in properties.geoObjects %}',
+                '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
+            '{% endfor %}',
+            '</div>'
+      ].join(''));
       self.pointsCollection.createCluster = function (center, geoObjects) {
         // Наследуем все поля класса.
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
@@ -88,9 +97,9 @@ lng:MapModel
         //   clusterPlacemark.
         // }
         var weights = geoObjects.reduce(function(result, current) {
-          if (current.properties.get("rdf:type") === "lng:LngDemand") {
+          if (current.properties.get("type") === "lng:LngDemand") {
             result[0] = ++result[0];
-          } else if (current.properties.get("rdf:type") === "lng:LngSupply") {
+          } else if (current.properties.get("type") === "lng:LngSupply") {
             result[1] = ++result[1];
           } else {
             result[2] = ++result[2];
@@ -103,48 +112,43 @@ lng:MapModel
                 { weight: weights[0], color: '#28a745' },
                 { weight: weights[1], color: '#dc3545' }, 
                 { weight: weights[2], color: '#17a2b8' }
-            ],
-            // Подпись к диаграмме.
-            iconCaption: 'Диаграмма кластера',
+            ]
         });
 
         // Задаем опции кластера.
         clusterPlacemark.options.set('iconLayout', 'default#pieChart');
-        clusterPlacemark.options.set('balloonContentLayout', 'cluster#balloonAccordion');
-        clusterPlacemark.options.set('balloonPanelContentLayout', 'cluster#balloonAccordion');
-        clusterPlacemark.options.set('balloonItemContentLayout', 'cluster#balloonAccordion');
-        // clusterPlacemark.options.set("balloonContentHeader", function() {
-        //   console.log(this);
-          
-        // });
+        //clusterPlacemark.options.set('balloonContentLayout', "cluster#balloonAccordion");
+        clusterPlacemark.options.set('balloonContentLayout', customBalloonContentLayout);
+        // clusterPlacemark.options.set('balloonPanelContentLayout', 'cluster#balloonAccordion');
+        // clusterPlacemark.options.set('balloonItemContentLayout', 'cluster#balloonAccordion');
         clusterPlacemark.options.set('disableClickZoom', true);
         clusterPlacemark.options.set('openBalloonOnClick', true);
-        clusterPlacemark.options.set('balloonLeftColumnWidth', 60);
+        //clusterPlacemark.options.set('balloonLeftColumnWidth', 60);
         clusterPlacemark.options.set('balloonPanelMaxMapArea', 0);
         clusterPlacemark.options.set('balloonContentLayoutHeight', 200);
         clusterPlacemark.options.set('balloonContentLayoutWidth', 300);
         return clusterPlacemark;
       };
 
-      self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
-        var target = e.get('target');
-        var type = e.get('type');
-        if (typeof target.getGeoObjects != 'undefined') {
-          // Событие произошло на кластере.
-          if (type == 'mouseenter') {
-              target.options.set('preset', 'islands#invertedPinkClusterIcons');
-          } else {
-              target.options.set('preset', 'islands#invertedVioletClusterIcons');
-          }
-        } else {
-          // Событие произошло на геообъекте.
-          if (type == 'mouseenter') {
-              target.options.set('preset', 'islands#pinkIcon');
-          } else {
-              target.options.set('preset', 'islands#violetIcon');
-          }
-        }
-      });
+      // self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
+      //   var target = e.get('target');
+      //   var type = e.get('type');
+      //   if (typeof target.getGeoObjects != 'undefined') {
+      //     // Событие произошло на кластере.
+      //     if (type == 'mouseenter') {
+      //         target.options.set('preset', 'islands#invertedPinkClusterIcons');
+      //     } else {
+      //         target.options.set('preset', 'islands#invertedVioletClusterIcons');
+      //     }
+      //   } else {
+      //     // Событие произошло на геообъекте.
+      //     if (type == 'mouseenter') {
+      //         target.options.set('preset', 'islands#pinkIcon');
+      //     } else {
+      //         target.options.set('preset', 'islands#violetIcon');
+      //     }
+      //   }
+      // });
 
       self.pointsCollection.events.add("click", function(e) {
         var target = e.get("target");
@@ -247,8 +251,9 @@ lng:MapModel
       icon = "islands#circleIcon";
     }
     return new ymaps.Placemark(coord, {
-      "@": individ.id,
-      "rdf:type": individ["rdf:type"][0].id
+      "id": individ.id,
+      "type": individ["rdf:type"][0].id,
+      "label": individ["rdf:type"][0]
     }, {
       preset: icon,
       iconColor: iconColor
@@ -256,7 +261,7 @@ lng:MapModel
   };
 
   this.getIndividualFromPoint = function(point) {
-    var id = point.properties.get("@");
+    var id = point.properties.get("id");
     if (id) {
       return new veda.IndividualModel(id);
     } else {
@@ -316,8 +321,8 @@ lng:MapTemplate
   }
 
   function init() {
-	individual._init().then(function(result) {
-	  map = individual.getMap();
+    individual._init().then(function(result) {
+      map = individual.getMap();
       map.events.add("contextmenu", rightClickOnMap);
       map.events.add("boundschange", individual.showPoints)
     });
