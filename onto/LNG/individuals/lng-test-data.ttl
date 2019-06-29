@@ -26,7 +26,7 @@ d:testLngStation1
   v-s:longitude "49.640043"^^xsd:decimal ;
   v-s:postalAddress "село Объячево, Прилузский район, Республика Коми, Россия, Транспортная улица"^^xsd:string ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation1Supply
@@ -39,7 +39,7 @@ d:testLngStation1Supply
   v-s:amount "10"^^xsd:integer ;
   v-s:latitude "60.32445"^^xsd:decimal ;
   v-s:longitude "49.640043"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .  
 d:testLngStation1Demand
@@ -49,7 +49,7 @@ d:testLngStation1Demand
   v-s:latitude "60.32445"^^xsd:decimal ;
   v-s:longitude "49.640043"^^xsd:decimal ; 
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;  
 .  
   
@@ -60,7 +60,7 @@ d:testLngStation2
   v-s:longitude "50.118425"^^xsd:decimal ;
   v-s:postalAddress "Республика Коми, Россия, Визинга-Койгородок"^^xsd:string ;
   v-s:parentOrganization d:org_RU2801018275 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation2Supply
@@ -73,7 +73,7 @@ d:testLngStation2Supply
   v-s:amount "15"^^xsd:integer ;
   v-s:latitude "61.05606333"^^xsd:decimal ;
   v-s:longitude "50.118425"^^xsd:decimal ; 
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;   
 . 
 d:testLngStation2Demand
@@ -83,7 +83,7 @@ d:testLngStation2Demand
   v-s:latitude "61.05606333"^^xsd:decimal ;
   v-s:longitude "50.118425"^^xsd:decimal ; 
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .  
 
@@ -94,7 +94,7 @@ d:testLngStation3
   v-s:longitude "50.653065"^^xsd:decimal ;
   v-s:postalAddress "Республика Коми, Россия, Сыктывдинский район"^^xsd:string ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation3Supply
@@ -107,7 +107,7 @@ d:testLngStation3Supply
   v-s:amount "20"^^xsd:integer ;
   v-s:latitude "61.57321833"^^xsd:decimal ;
   v-s:longitude "50.653065"^^xsd:decimal ;  
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 . 
 d:testLngStation3Demand
@@ -117,7 +117,7 @@ d:testLngStation3Demand
   v-s:latitude "61.57321833"^^xsd:decimal ;
   v-s:longitude "50.653065"^^xsd:decimal ;
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .  
 
@@ -128,7 +128,7 @@ d:testLngStation4
   v-s:longitude "50.81429969"^^xsd:decimal ;
   v-s:postalAddress "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation4Supply_1
@@ -141,35 +141,9 @@ d:testLngStation4Supply_1
   v-s:amount "15"^^xsd:integer ;
   v-s:latitude "61.63678935"^^xsd:decimal ;
   v-s:longitude "50.81429969"^^xsd:decimal ;  
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 . 
-d:testLngStation4Supply_2
-  a lng:LngSupply;
-  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
-  v-s:backwardTarget d:testLngStation4 ;
-  v-s:backwardProperty lng:hasSupply ;
-  v-s:canRead "true"^^xsd:boolean ;
-  v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:amount "20"^^xsd:integer ;
-  v-s:latitude "61.63678935"^^xsd:decimal ;
-  v-s:longitude "50.81429969"^^xsd:decimal ;  
-  v-s:dateFrom "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
-  v-s:hasStatus lng:StatusDecided ;
-. 
-d:testLngStation4Supply_3
-  a lng:LngSupply;
-  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
-  v-s:backwardTarget d:testLngStation4 ;
-  v-s:backwardProperty lng:hasSupply ;
-  v-s:canRead "true"^^xsd:boolean ;
-  v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:amount "25"^^xsd:integer ;
-  v-s:latitude "61.63678935"^^xsd:decimal ;
-  v-s:longitude "50.81429969"^^xsd:decimal ;  
-  v-s:dateFrom "2025-01-01T00:00:00.000Z"^^xsd:dateTime;
-  v-s:hasStatus lng:StatusUnderDiscussion ;
-.
 d:testLngStation4Demand_1
   a lng:LngDemand;
   rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
@@ -177,7 +151,7 @@ d:testLngStation4Demand_1
   v-s:latitude "61.63678935"^^xsd:decimal ;
   v-s:longitude "50.81429969"^^xsd:decimal ; 
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation4Demand_2
@@ -186,9 +160,59 @@ d:testLngStation4Demand_2
   v-s:amount "10"^^xsd:integer ;
   v-s:latitude "61.63678935"^^xsd:decimal ;
   v-s:longitude "50.81429969"^^xsd:decimal ; 
-  v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:parentOrganization  d:org_RU7713727881 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusDecided ;
+.
+d:testLngStation4Demand_3
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "61.63678935"^^xsd:decimal ;
+  v-s:longitude "50.81429969"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7723826955 ;
+  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation4Demand_4
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
+  v-s:amount "15"^^xsd:integer ;
+  v-s:latitude "61.63678935"^^xsd:decimal ;
+  v-s:longitude "50.81429969"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7713727881 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusDecided ;
+.
+d:testLngStation4Demand_5
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
+  v-s:amount "10"^^xsd:integer ;
+  v-s:latitude "61.63678935"^^xsd:decimal ;
+  v-s:longitude "50.81429969"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7715356456 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusDecided ;
+.
+d:testLngStation4Demand_6
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "61.63678935"^^xsd:decimal ;
+  v-s:longitude "50.81429969"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7723826955 ;
+  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation4Demand_7
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Сысольское шоссе, 51"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "61.63678935"^^xsd:decimal ;
+  v-s:longitude "50.81429969"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU1653019048 ;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
 .
 
 d:testLngStation5
