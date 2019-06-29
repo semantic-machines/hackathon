@@ -81,6 +81,8 @@ lng:MapModel
             '</div>'
       ].join(''));
       
+      self.pointsCollection = new ymaps.Clusterer({});
+
       self.pointsCollection.createCluster = function (center, geoObjects) {
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
         var weights = geoObjects.reduce(function(result, current) {
@@ -387,7 +389,7 @@ lng:MapFilter
   rdfs:label "Filters"@en ;
   v-ui:hasTemplate lng:MapFilterTemplate ;
   v-ui:hasModel lng:MapFilterModel;
-  lng:hasFilteredTypes lng:StationaryFillingStation, lng:MobileFillingStation, lng:LngProductionComplex, lng:LngStorage, lng:LngSupply, lng:LngDemand;
+  lng:hasFilteredTypes lng:StationaryFillingStation, lng:MobileFillingStation, lng:LngProductionComplex, lng:LngStorage;
   lng:hasFilteredStatus lng:StatusInOperation, lng:StatusDecided, lng:StatusUnderDiscussion;
   lng:hasFilteredAnaliz lng:LngDemand, lng:LngSupply;
 .
@@ -468,12 +470,14 @@ lng:MapFilterModel
     var self = this;
     this.generateQueryString = function() {
       var query = [];
-      if (self.hasValue("lng:hasFilteredTypes")) {
-        var partType = self["lng:hasFilteredTypes"].map(function(type) {
+      if (self.hasValue("lng:hasFilteredTypes") || self.hasValue("lng:hasFilteredAnaliz")) {
+        var partType = self["lng:hasFilteredTypes"].concat(self["lng:hasFilteredAnaliz"]).map(function(type) {
           return "'rdf:type'==='" + type.id + "'";
         }).join(" || ");
         query.push("("+partType+")");
-      };
+      } else {
+        return "";
+      }
       if (self.hasValue("lng:hasFilteredOrganization")) {
         var partOrganization = self["lng:hasFilteredOrganization"].map(function(org) {
           return "'v-s:parentOrganization'==='" + org.id + "'";
@@ -485,6 +489,8 @@ lng:MapFilterModel
           return "'v-s:hasStatus'==='" + status.id + "'";
         }).join(" || ");
         query.push("("+partStatus+")");
+      } else {
+        return "";
       }
       return query.join(" && ");
     }
@@ -525,12 +531,12 @@ lng:MapFilterTemplate
   function filtered(){
     lngMap.showPoints(individual.generateQueryString(), undefined, undefined);
   }
-  individual.on("lng:hasFilteredTypes lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
+  individual.on("lng:hasFilteredTypes lng:hasFilteredAnaliz lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
   var lngMap = new veda.IndividualModel("lng:Map");
   template.append(lngMap["rdfs:label"]);
 
   template.on("remove", function() {
-    individual.off("lng:hasFilteredTypes lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
+    individual.off("lng:hasFilteredTypes lng:hasFilteredAnaliz lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
   })
   //# sourceURL=lng:MapFilterTemplate_post
 </script>
