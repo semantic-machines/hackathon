@@ -299,15 +299,19 @@ lng:MapTemplate
   function rightClickOnMap(e){
     var coords = e.get("coords");
     map.balloon.open(e.get('coords'), {
-      contentHeader: '<button id="add-New" class="btn btn-sm btn-primary">Добавить объект</button>'
+      contentHeader: '<div class="btn-group"><button id="add-NewObject" class="btn btn-sm btn-primary">Добавить объект</button><button id="add-NewDemand" class="btn btn-sm btn-default">Добавить спрос</button></div>'
     }).then(function(result) {
-      $("#add-New",template).click(function(){
+      $("#add-NewObject",template).click(function(){
         addNewPoint(coords);
         // var myPlacemark = new ymaps.Placemark(coords, {}, {
         //   preset: "islands#medicalCircleIcon",
         //   iconColor: "#28a745"
         // });
         // map.geoObjects.add(myPlacemark);
+        map.balloon.close();
+      });
+      $("#add-NewDemand",template).click(function(){
+        addNewPoint("demand", coords);
         map.balloon.close();
       })
     });
@@ -321,14 +325,25 @@ lng:MapTemplate
     });
   }
 
-  function addNewPoint(coords) {
+  function addNewPoint(type, coords) {
     var individ = new veda.IndividualModel();
+    var tmpl;
+    if (type === "demand") {
+      individ["rdf:type"] = [new veda.IndividualModel("lng:LngDemand")];
+      tmpl = "lng:LngDemandTemplate";
+    } else {
+      tmpl = "lng:NewMapPointTemplate";
+    }
     // individ["rdf:type"] = [new veda.IndividualModel("lng:StationaryFillingStation")];
     if (coords) {
       individ["v-s:latitude"] = [coords[0]];
       individ["v-s:longitude"] = [coords[1]];
     }
-    riot.route( ["#", individ.id, "#main", "lng:NewMapPointTemplate", "edit"].join("/") );
+    var modal = veda.Util.showModal(individ, tmpl, "edit");
+    modal.one("remove", function (e) {
+      individual.showPoints();
+    });
+    //riot.route( ["#", individ.id, "#main", template, "edit"].join("/") );
     // individ.present($("<div>"), "lng:NewMapPointTemplate", "edit").then(function (tmpl) {
     //   $("#show-PointInfo", template).empty().append(tmpl);
     // });
