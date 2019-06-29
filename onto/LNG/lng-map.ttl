@@ -78,18 +78,18 @@ lng:MapModel
               '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
                 '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
               '{% endif %}',
-            '{% endfor %}',
-            '</div>'
+            '{% endfor %}'
       ].join(''));
-
+      //'</div><hr><div>Спрос {{properties.data[0].weight}}</div><div>Предложения {{properties.data[1].weight}}</div>'
       self.pointsCollection = new ymaps.Clusterer({});
       self.pointsCollection.createCluster = function (center, geoObjects) {
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
         var weights = geoObjects.reduce(function(result, current) {
-          if (current.properties.get("type") === "lng:LngDemand") {
-            result[0] = ++result[0];
-          } else if (current.properties.get("type") === "lng:LngSupply") {
-            result[1] = ++result[1];
+          var individ = current.properties.get("individual");
+          if (individ.hasValue("rdf:type", "lng:LngDemand")) {
+            result[0] = result[0]+individ["v-s:amount"][0];
+          } else if (individ.hasValue("rdf:type", "lng:LngSupply")) {
+            result[1] = result[1]+individ["v-s:amount"][0];
           } else {
             result[2] = ++result[2];
           }
@@ -125,7 +125,6 @@ lng:MapModel
           var modal = veda.Util.showModal(new veda.IndividualModel(objectUri), undefined, "view");
         })
       });
-
       // self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
       //   var target = e.get('target');
       //   var type = e.get('type');
@@ -253,6 +252,7 @@ lng:MapModel
       preset: icon,
       iconColor: iconColor
     });
+    
   };
 
   this.getIndividualFromPoint = function(point) {
