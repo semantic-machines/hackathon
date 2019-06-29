@@ -105,6 +105,15 @@ lng:LngDemandTemplate
       </div>
       <div class="row row-attribute">
         <div class="col-sm-3 col-xs-5">
+          <label about="v-s:dateFromPlan" property="rdfs:label"></label>
+        </div>
+        <div class="col-sm-3 col-xs-3">
+          <div property="v-s:dateFromPlan" class="view -edit -search"></div>
+          <veda-control data-type="date" property="v-s:dateFromPlan" class="-view edit search"></veda-control>
+        </div>
+      </div>
+      <div class="row row-attribute">
+        <div class="col-sm-3 col-xs-5">
           <label about="v-s:dateFrom" property="rdfs:label"></label>
         </div>
         <div class="col-sm-3 col-xs-3">
