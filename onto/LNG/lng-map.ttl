@@ -72,15 +72,6 @@ lng:MapModel
       self.map.behaviors.disable(['rightMouseButtonMagnifier']);
       self.map.geoObjects.add(result.geoObjects);
 
-      // preset: 'islands#circleIcon',
-      // self.pointsCollection = new ymaps.Clusterer({
-      //   clusterIconLayout: 'default#pieChart'
-      // }, {
-      //   iconColor: "#17a2b8"
-      // });
-
-      self.pointsCollection = new ymaps.Clusterer({});
-
       var customBalloonContentLayout = ymaps.templateLayoutFactory.createClass([
             '<div class="list-group">',
             // Выводим в цикле список всех геообъектов.
@@ -89,13 +80,9 @@ lng:MapModel
             '{% endfor %}',
             '</div>'
       ].join(''));
+      
       self.pointsCollection.createCluster = function (center, geoObjects) {
-        // Наследуем все поля класса.
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
-        // Устанавливаем свойства кластера.
-        // if (geoObjects.length === 3) {
-        //   clusterPlacemark.
-        // }
         var weights = geoObjects.reduce(function(result, current) {
           if (current.properties.get("type") === "lng:LngDemand") {
             result[0] = ++result[0];
@@ -106,24 +93,23 @@ lng:MapModel
           }
           return result;
         }, [0, 0, 0]);
+        if (weights[2] === 1) weights[2] = "<span style='color:#17a2b8' class='glyphicon glyphicon-oil'></span>"
         clusterPlacemark.properties.set({
-            // Данные для построения диаграммы.
-            data: [
-                { weight: weights[0], color: '#28a745' },
-                { weight: weights[1], color: '#dc3545' }, 
-                { weight: weights[2], color: '#17a2b8' }
-            ]
+          // Данные для построения диаграммы.
+          data: [
+              { weight: weights[0], color: '#28a745' },
+              { weight: weights[1], color: '#dc3545' }
+          ],
+          iconContent: weights[2]
         });
-
-        // Задаем опции кластера.
+        clusterPlacemark.options.set("iconPieChartRadius", 20);
+        clusterPlacemark.options.set("iconPieChartCoreRadius", 15);
+        // clusterPlacemark.options.set("iconPieChartStrokeWidth", 3);
         clusterPlacemark.options.set('iconLayout', 'default#pieChart');
-        //clusterPlacemark.options.set('balloonContentLayout', "cluster#balloonAccordion");
         clusterPlacemark.options.set('balloonContentLayout', customBalloonContentLayout);
-        // clusterPlacemark.options.set('balloonPanelContentLayout', 'cluster#balloonAccordion');
-        // clusterPlacemark.options.set('balloonItemContentLayout', 'cluster#balloonAccordion');
+
         clusterPlacemark.options.set('disableClickZoom', true);
         clusterPlacemark.options.set('openBalloonOnClick', true);
-        //clusterPlacemark.options.set('balloonLeftColumnWidth', 60);
         clusterPlacemark.options.set('balloonPanelMaxMapArea', 0);
         clusterPlacemark.options.set('balloonContentLayoutHeight', 200);
         clusterPlacemark.options.set('balloonContentLayoutWidth', 300);
@@ -253,7 +239,8 @@ lng:MapModel
     return new ymaps.Placemark(coord, {
       "id": individ.id,
       "type": individ["rdf:type"][0].id,
-      "label": individ["rdf:type"][0]
+      "label": individ["rdf:type"][0],
+      "individual": individ
     }, {
       preset: icon,
       iconColor: iconColor
