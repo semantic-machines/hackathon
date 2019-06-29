@@ -235,21 +235,8 @@ d:testLngStation5Supply_1
   v-s:amount "15"^^xsd:integer ;
   v-s:latitude "61.680745"^^xsd:decimal ;
   v-s:longitude "50.732468"^^xsd:decimal ;  
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
-.
-d:testLngStation5Supply_2
-  a lng:LngSupply;
-  rdfs:label "Сыктывкар, Республика Коми, Россия, местечко Дырнос, 147"^^xsd:string ;
-  v-s:backwardTarget d:testLngStation5 ;
-  v-s:backwardProperty lng:hasSupply ;
-  v-s:canRead "true"^^xsd:boolean ;
-  v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:amount "25"^^xsd:integer ;
-  v-s:latitude "61.680745"^^xsd:decimal ;
-  v-s:longitude "50.732468"^^xsd:decimal ;  
-  v-s:dateFrom "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
-  v-s:hasStatus lng:StatusDecided ;
 .
 d:testLngStation5Demand_1
   a lng:LngDemand;
@@ -258,7 +245,7 @@ d:testLngStation5Demand_1
   v-s:latitude "61.680745"^^xsd:decimal ;
   v-s:longitude "50.732468"^^xsd:decimal ;  
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation5Demand_2
@@ -267,8 +254,8 @@ d:testLngStation5Demand_2
   v-s:amount "10"^^xsd:integer ;
   v-s:latitude "61.680745"^^xsd:decimal ;
   v-s:longitude "50.732468"^^xsd:decimal ;  
-  v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:parentOrganization  d:org_RU1653019048 ;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusDecided ;
 .
 d:testLngStation5Demand_3
@@ -278,7 +265,7 @@ d:testLngStation5Demand_3
   v-s:latitude "61.680745"^^xsd:decimal ;
   v-s:longitude "50.732468"^^xsd:decimal ;  
   v-s:parentOrganization  d:org_RU7724261610 ;
-  v-s:dateFrom "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusDecided ;
 .
 d:testLngStation5Demand_4
@@ -288,7 +275,37 @@ d:testLngStation5Demand_4
   v-s:latitude "61.680745"^^xsd:decimal ;
   v-s:longitude "50.732468"^^xsd:decimal ;  
   v-s:parentOrganization  d:org_RU7715356456 ;
-  v-s:dateFrom "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusUnderDiscussion ;
+.
+d:testLngStation5Demand_5
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, местечко Дырнос, 147"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "61.680745"^^xsd:decimal ;
+  v-s:longitude "50.732468"^^xsd:decimal ;  
+  v-s:parentOrganization  d:org_RU7713727881 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusUnderDiscussion ;
+.
+d:testLngStation5Demand_6
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, местечко Дырнос, 147"^^xsd:string ;
+  v-s:amount "15"^^xsd:integer ;
+  v-s:latitude "61.680745"^^xsd:decimal ;
+  v-s:longitude "50.732468"^^xsd:decimal ;  
+  v-s:parentOrganization  d:org_RU7723826955 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusUnderDiscussion ;
+.
+d:testLngStation5Demand_7
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, местечко Дырнос, 147"^^xsd:string ;
+  v-s:amount "25"^^xsd:integer ;
+  v-s:latitude "61.680745"^^xsd:decimal ;
+  v-s:longitude "50.732468"^^xsd:decimal ;  
+  v-s:parentOrganization  d:org_RU7826094630 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusUnderDiscussion ;
 .
 
@@ -300,7 +317,7 @@ d:testLngStation6
   v-s:longitude "50.806036"^^xsd:decimal ;
   v-s:postalAddress "Сыктывкар, Республика Коми, Россия, Октябрьский проспект"^^xsd:string ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation6Supply
@@ -323,7 +340,7 @@ d:testLngStation6Demand_1
   v-s:latitude "61.688178"^^xsd:decimal ;
   v-s:longitude "50.806036"^^xsd:decimal ; 
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 . 
 d:testLngStation6Demand_2
@@ -333,6 +350,57 @@ d:testLngStation6Demand_2
   v-s:latitude "61.688178"^^xsd:decimal ;
   v-s:longitude "50.806036"^^xsd:decimal ; 
   v-s:parentOrganization  d:org_RU7724261610 ;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;  
+. 
+d:testLngStation6Demand_3
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Октябрьский проспект"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "61.688178"^^xsd:decimal ;
+  v-s:longitude "50.806036"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7715356456 ;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;  
+. 
+d:testLngStation6Demand_4
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Октябрьский проспект"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "61.688178"^^xsd:decimal ;
+  v-s:longitude "50.806036"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7723826955 ;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;  
+. 
+d:testLngStation6Demand_5
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Октябрьский проспект"^^xsd:string ;
+  v-s:amount "25"^^xsd:integer ;
+  v-s:latitude "61.688178"^^xsd:decimal ;
+  v-s:longitude "50.806036"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU7713727881 ;
+  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;  
+. 
+d:testLngStation6Demand_6
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Октябрьский проспект"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "61.688178"^^xsd:decimal ;
+  v-s:longitude "50.806036"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU1653019048 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;  
+. 
+d:testLngStation6Demand_7
+  a lng:LngDemand;
+  rdfs:label "Сыктывкар, Республика Коми, Россия, Октябрьский проспект"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "61.688178"^^xsd:decimal ;
+  v-s:longitude "50.806036"^^xsd:decimal ; 
+  v-s:parentOrganization  d:org_RU1653019048 ;
+  v-s:hasStatus lng:StatusInOperation ;  
 . 
 
 d:testLngStation7
@@ -342,7 +410,7 @@ d:testLngStation7
   v-s:longitude "50.75101"^^xsd:decimal ;
   v-s:postalAddress "Россия, Республика Коми, Сыктывкар, проспект Бумажников, 70"^^xsd:string ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation7Supply
@@ -355,17 +423,17 @@ d:testLngStation7Supply
   v-s:amount "15"^^xsd:integer ;
   v-s:latitude "61.77488"^^xsd:decimal ;
   v-s:longitude "50.75101"^^xsd:decimal ;  
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation7Demand
   a lng:LngDemand;
   rdfs:label "Россия, Республика Коми, Сыктывкар, проспект Бумажников, 70"^^xsd:string ;
-  v-s:amount "15"^^xsd:integer ;
+  v-s:amount "20"^^xsd:integer ;
   v-s:latitude "61.77488"^^xsd:decimal ;
   v-s:longitude "50.75101"^^xsd:decimal ;  
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 
@@ -410,7 +478,7 @@ d:testLngStation9
   v-s:longitude "48.66956245"^^xsd:decimal ;
   v-s:postalAddress "Удорский район, Республика Коми, Россия, поселок городского типа Усогорск"^^xsd:string ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation9Supply
@@ -423,17 +491,47 @@ d:testLngStation9Supply
   v-s:amount "20"^^xsd:integer ;
   v-s:latitude "63.42681011"^^xsd:decimal ;
   v-s:longitude "48.66956245"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
-d:testLngStation9Demand
+d:testLngStation9Demand_1
   a lng:LngDemand;
   rdfs:label "Удорский район, Республика Коми, Россия, поселок городского типа Усогорск"^^xsd:string ;
   v-s:amount "35"^^xsd:integer ;
   v-s:latitude "63.42681011"^^xsd:decimal ;
   v-s:longitude "48.66956245"^^xsd:decimal ;  
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation9Demand_2
+  a lng:LngDemand;
+  rdfs:label "Удорский район, Республика Коми, Россия, поселок городского типа Усогорск"^^xsd:string ;
+  v-s:amount "35"^^xsd:integer ;
+  v-s:latitude "63.42681011"^^xsd:decimal ;
+  v-s:longitude "48.66956245"^^xsd:decimal ;  
+  v-s:parentOrganization  d:org_RU7723826955 ;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation9Demand_3
+  a lng:LngDemand;
+  rdfs:label "Удорский район, Республика Коми, Россия, поселок городского типа Усогорск"^^xsd:string ;
+  v-s:amount "35"^^xsd:integer ;
+  v-s:latitude "63.42681011"^^xsd:decimal ;
+  v-s:longitude "48.66956245"^^xsd:decimal ;  
+  v-s:parentOrganization  d:org_RU7713727881 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation9Demand_4
+  a lng:LngDemand;
+  rdfs:label "Удорский район, Республика Коми, Россия, поселок городского типа Усогорск"^^xsd:string ;
+  v-s:amount "35"^^xsd:integer ;
+  v-s:latitude "63.42681011"^^xsd:decimal ;
+  v-s:longitude "48.66956245"^^xsd:decimal ;  
+  v-s:parentOrganization  d:org_RU7724261610 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 
@@ -478,7 +576,7 @@ d:testLngStation11
   v-s:longitude "53.55791657"^^xsd:decimal ;
   v-s:postalAddress "Республика Коми, Россия, Р-25" ;
   v-s:parentOrganization d:org_RU1101031945 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation11Supply
@@ -491,17 +589,27 @@ d:testLngStation11Supply
   v-s:amount "20"^^xsd:integer ;
   v-s:latitude "63.55783584"^^xsd:decimal ;
   v-s:longitude "53.55791657"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
-d:testLngStation11Demand
+d:testLngStation11Demand_1
   a lng:LngDemand;
   rdfs:label "Республика Коми, Россия, Р-25"^^xsd:string ;
   v-s:amount "10"^^xsd:integer ;
   v-s:latitude "63.55783584"^^xsd:decimal ;
   v-s:longitude "53.55791657"^^xsd:decimal ;  
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation11Demand_2
+  a lng:LngDemand;
+  rdfs:label "Республика Коми, Россия, Р-25"^^xsd:string ;
+  v-s:amount "10"^^xsd:integer ;
+  v-s:latitude "63.55783584"^^xsd:decimal ;
+  v-s:longitude "53.55791657"^^xsd:decimal ;  
+  v-s:parentOrganization d:org_RU7715356456 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 
@@ -512,7 +620,7 @@ d:testLngStation12
   v-s:longitude "53.66996667"^^xsd:decimal ;
   v-s:postalAddress "поселок Куратово\nУхта,Северная 3,Республика Коми, Россия"^^xsd:string ;
   v-s:parentOrganization d:org_RU1102053691 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation12Supply
@@ -525,17 +633,27 @@ d:testLngStation12Supply
   v-s:amount "20"^^xsd:integer ;
   v-s:latitude "63.59637"^^xsd:decimal ;
   v-s:longitude "53.66996667"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
-d:testLngStation12Demand
+d:testLngStation12Demand_1
   a lng:LngDemand;
   rdfs:label "поселок Куратово\nУхта,Северная 3,Республика Коми, Россия"^^xsd:string ;
   v-s:amount "15"^^xsd:integer ;
   v-s:latitude "63.59637"^^xsd:decimal ;
   v-s:longitude "53.66996667"^^xsd:decimal ;
   v-s:parentOrganization  d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation12Demand_2
+  a lng:LngDemand;
+  rdfs:label "поселок Куратово\nУхта,Северная 3,Республика Коми, Россия"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "63.59637"^^xsd:decimal ;
+  v-s:longitude "53.66996667"^^xsd:decimal ;
+  v-s:parentOrganization  d:org_RU7723826955 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 
@@ -580,7 +698,7 @@ d:testLngStation14
   v-s:longitude "64.08717882"^^xsd:decimal ;
   v-s:postalAddress "Воркута, Республика Коми, Россия, улица Чехова"^^xsd:string ;
   v-s:parentOrganization d:org_RU1103024848 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation14Supply_1
@@ -593,23 +711,10 @@ d:testLngStation14Supply_1
   v-s:amount "15"^^xsd:integer ;
   v-s:latitude "67.52190103"^^xsd:decimal ;
   v-s:longitude "64.08717882"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
-d:testLngStation14Supply_2
-  a lng:LngSupply;
-  rdfs:label "Воркута, Республика Коми, Россия, улица Чехова"^^xsd:string ;
-  v-s:backwardTarget d:testLngStation14 ;
-  v-s:backwardProperty lng:hasSupply ;
-  v-s:canRead "true"^^xsd:boolean ;
-  v-s:parentOrganization d:org_RU1103024848 ;
-  v-s:amount "10"^^xsd:integer ;
-  v-s:latitude "67.52190103"^^xsd:decimal ;
-  v-s:longitude "64.08717882"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
-  v-s:hasStatus lng:StatusDecided ;
-.
-d:testLngStation14Demand
+d:testLngStation14Demand_1
   a lng:LngDemand;
   rdfs:label "Воркута, Республика Коми, Россия, улица Чехова"^^xsd:string ;
   v-s:amount "25"^^xsd:integer ;
@@ -617,6 +722,16 @@ d:testLngStation14Demand
   v-s:longitude "64.08717882"^^xsd:decimal ;
   v-s:parentOrganization  d:org_RU7826094630 ;
   v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation14Demand_2
+  a lng:LngDemand;
+  rdfs:label "Воркута, Республика Коми, Россия, улица Чехова"^^xsd:string ;
+  v-s:amount "25"^^xsd:integer ;
+  v-s:latitude "67.52190103"^^xsd:decimal ;
+  v-s:longitude "64.08717882"^^xsd:decimal ;
+  v-s:parentOrganization  d:org_RU7713727881 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 
@@ -670,7 +785,7 @@ d:testLngStation15Demand_3
   v-s:latitude "65.02234357"^^xsd:decimal ;
   v-s:longitude "53.93943798"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7715356456 ;
-  v-s:dateFrom "2022-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusUnderDiscussion ; 
 .
 
@@ -681,7 +796,7 @@ d:testLngStation16
   v-s:longitude "30.3258277"^^xsd:decimal ;
   v-s:postalAddress "Санкт-Петербург, Россия, Пулковское шоссе, 42"^^xsd:string ;
   v-s:parentOrganization d:org_RU5504036333 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation16Supply
@@ -694,17 +809,36 @@ d:testLngStation16Supply
   v-s:amount "10"^^xsd:integer ;
   v-s:latitude "59.81624281"^^xsd:decimal ;
   v-s:longitude "30.3258277"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
-d:testLngStation16Demand
+d:testLngStation16Demand_1
   a lng:LngDemand;
   rdfs:label "Санкт-Петербург, Россия, Пулковское шоссе, 42"^^xsd:string ;
   v-s:amount "30"^^xsd:integer ;
   v-s:latitude "59.81624281"^^xsd:decimal ;
   v-s:longitude "30.3258277"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation16Demand_2
+  a lng:LngDemand;
+  rdfs:label "Санкт-Петербург, Россия, Пулковское шоссе, 42"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "59.81624281"^^xsd:decimal ;
+  v-s:longitude "30.3258277"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7715356456 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation16Demand_3
+  a lng:LngDemand;
+  rdfs:label "Санкт-Петербург, Россия, Пулковское шоссе, 42"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "59.81624281"^^xsd:decimal ;
+  v-s:longitude "30.3258277"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -731,7 +865,7 @@ d:testLngStation17Supply
   v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
-d:testLngStation17Demand
+d:testLngStation17Demand_1
   a lng:LngDemand;
   rdfs:label "Санкт-Петербург, Россия, Загребский бульвар"^^xsd:string ;
   v-s:amount "20"^^xsd:integer ;
@@ -739,6 +873,25 @@ d:testLngStation17Demand
   v-s:longitude "30.418064"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
   v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation17Demand_2
+  a lng:LngDemand;
+  rdfs:label "Санкт-Петербург, Россия, Загребский бульвар"^^xsd:string ;
+  v-s:amount "20"^^xsd:integer ;
+  v-s:latitude "59.827105"^^xsd:decimal ;
+  v-s:longitude "30.418064"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7723826955 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation17Demand_3
+  a lng:LngDemand;
+  rdfs:label "Санкт-Петербург, Россия, Загребский бульвар"^^xsd:string ;
+  v-s:amount "25"^^xsd:integer ;
+  v-s:latitude "59.827105"^^xsd:decimal ;
+  v-s:longitude "30.418064"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7713727881 ;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -749,7 +902,7 @@ d:testLngStation18
   v-s:longitude "30.3093482"^^xsd:decimal ;
   v-s:postalAddress "Московский район, Санкт-Петербург, Россия, муниципальный округ Новоизмайловское"^^xsd:string ;
   v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation18Supply
@@ -762,17 +915,36 @@ d:testLngStation18Supply
   v-s:amount "30"^^xsd:integer ;
   v-s:latitude "59.83435"^^xsd:decimal ;
   v-s:longitude "30.3093482"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
-d:testLngStation18Demand
+d:testLngStation18Demand_1
   a lng:LngDemand;
   rdfs:label "Московский район, Санкт-Петербург, Россия, муниципальный округ Новоизмайловское"^^xsd:string ;
   v-s:amount "35"^^xsd:integer ;
   v-s:latitude "59.827105"^^xsd:decimal ;
   v-s:longitude "30.418064"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation18Demand_2
+  a lng:LngDemand;
+  rdfs:label "Московский район, Санкт-Петербург, Россия, муниципальный округ Новоизмайловское"^^xsd:string ;
+  v-s:amount "35"^^xsd:integer ;
+  v-s:latitude "59.827105"^^xsd:decimal ;
+  v-s:longitude "30.418064"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7713727881 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation18Demand_3
+  a lng:LngDemand;
+  rdfs:label "Московский район, Санкт-Петербург, Россия, муниципальный округ Новоизмайловское"^^xsd:string ;
+  v-s:amount "35"^^xsd:integer ;
+  v-s:latitude "59.827105"^^xsd:decimal ;
+  v-s:longitude "30.418064"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7723826955 ;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -816,7 +988,16 @@ d:testLngStation19Demand_2
   v-s:latitude "59.877358"^^xsd:decimal ;
   v-s:longitude "30.245729"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusDecided ; 
+.
+d:testLngStation19Demand_3
+  a lng:LngDemand;
+  rdfs:label "Санкт-Петербург, Россия, Корабельная улица"^^xsd:string ;
+  v-s:amount "25"^^xsd:integer ;
+  v-s:latitude "59.877358"^^xsd:decimal ;
+  v-s:longitude "30.245729"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7723826955 ;
   v-s:hasStatus lng:StatusDecided ; 
 .
 
@@ -827,7 +1008,7 @@ d:testLngStation20
   v-s:longitude "30.37323509"^^xsd:decimal ;
   v-s:postalAddress "Россия, Санкт-Петербург, Выборгский район, муниципальный округ № 15"^^xsd:string ;
   v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation20Supply_1
@@ -840,20 +1021,7 @@ d:testLngStation20Supply_1
   v-s:amount "25"^^xsd:integer ;
   v-s:latitude "60.05351127"^^xsd:decimal ;
   v-s:longitude "30.37323509"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
-  v-s:hasStatus lng:StatusInOperation ; 
-.
-d:testLngStation20Supply_2
-  a lng:LngSupply;
-  rdfs:label "Россия, Санкт-Петербург, Выборгский район, муниципальный округ № 15"^^xsd:string ;
-  v-s:backwardTarget d:testLngStation20 ;
-  v-s:backwardProperty lng:hasSupply ;
-  v-s:canRead "true"^^xsd:boolean ;
-  v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:amount "20"^^xsd:integer ;
-  v-s:latitude "60.05351127"^^xsd:decimal ;
-  v-s:longitude "30.37323509"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 d:testLngStation20Demand
@@ -863,7 +1031,7 @@ d:testLngStation20Demand
   v-s:latitude "60.05351127"^^xsd:decimal ;
   v-s:longitude "30.37323509"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -884,7 +1052,7 @@ d:testLngStation21Demand
   v-s:latitude "58.426767"^^xsd:decimal ;
   v-s:longitude "33.176095"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusUnderDiscussion ; 
 .
 
@@ -895,17 +1063,36 @@ d:testLngStation22
   v-s:longitude "61.1315"^^xsd:decimal ;
   v-s:postalAddress "Россия, Челябинская область, южнее д. Бухарино"^^xsd:string ;
   v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusDecided ;
 .
-d:testLngStation22Demand
+d:testLngStation22Demand_1
   a lng:LngDemand;
   rdfs:label "Бухарино, КриоАЗС-1"^^xsd:string ;
   v-s:amount "30"^^xsd:integer ;
   v-s:latitude "55.282"^^xsd:decimal ;
   v-s:longitude "61.1315"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusUnderDiscussion ; 
+.
+d:testLngStation22Demand_2
+  a lng:LngDemand;
+  rdfs:label "Бухарино, КриоАЗС-1"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "55.282"^^xsd:decimal ;
+  v-s:longitude "61.1315"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7723826955 ;
+  v-s:dateFromPlan "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusUnderDiscussion ; 
+.
+d:testLngStation22Demand_3
+  a lng:LngDemand;
+  rdfs:label "Бухарино, КриоАЗС-1"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "55.282"^^xsd:decimal ;
+  v-s:longitude "61.1315"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusUnderDiscussion ; 
 .
 
@@ -916,7 +1103,7 @@ d:testLngStation23
   v-s:longitude "28.595385"^^xsd:decimal ;
   v-s:postalAddress "Трасса Р60, д. Малый Луцк, Ленинградская область, Россия"^^xsd:string ;
   v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation23Supply
@@ -929,17 +1116,36 @@ d:testLngStation23Supply
   v-s:amount "25"^^xsd:integer ;
   v-s:latitude "59.405786"^^xsd:decimal ;
   v-s:longitude "28.595385"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
-d:testLngStation23Demand
+d:testLngStation23Demand_1
   a lng:LngDemand;
   rdfs:label "Трасса Р60, д. Малый Луцк, Ленинградская область, Россия"^^xsd:string ;
   v-s:amount "30"^^xsd:integer ;
   v-s:latitude "59.405786"^^xsd:decimal ;
   v-s:longitude "28.595385"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation23Demand_2
+  a lng:LngDemand;
+  rdfs:label "Трасса Р60, д. Малый Луцк, Ленинградская область, Россия"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "59.405786"^^xsd:decimal ;
+  v-s:longitude "28.595385"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7715356456 ;
+  v-s:dateFrom "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation23Demand_3
+  a lng:LngDemand;
+  rdfs:label "Трасса Р60, д. Малый Луцк, Ленинградская область, Россия"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "59.405786"^^xsd:decimal ;
+  v-s:longitude "28.595385"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -966,7 +1172,7 @@ d:testLngStation24Supply
   v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
-d:testLngStation24Demand
+d:testLngStation24Demand_1
   a lng:LngDemand;
   rdfs:label "Ленинградская область, г. Кингисепп, 4-й проезд"^^xsd:string ;
   v-s:amount "30"^^xsd:integer ;
@@ -974,6 +1180,15 @@ d:testLngStation24Demand
   v-s:longitude "28.628323"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
   v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation24Demand_2
+  a lng:LngDemand;
+  rdfs:label "Ленинградская область, г. Кингисепп, 4-й проезд"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "59.37439"^^xsd:decimal ;
+  v-s:longitude "28.628323"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7713727881 ;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -984,7 +1199,7 @@ d:testLngStation25
   v-s:longitude "33.571372"^^xsd:decimal ;
   v-s:postalAddress "Россия, Ленинградская область, г. Тихвин, ул. К. Маркса, 74"^^xsd:string ;
   v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation25Supply
@@ -997,7 +1212,7 @@ d:testLngStation25Supply
   v-s:amount "40"^^xsd:integer ;
   v-s:latitude "59.641294"^^xsd:decimal ;
   v-s:longitude "33.571372"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 d:testLngStation25Demand
@@ -1007,7 +1222,7 @@ d:testLngStation25Demand
   v-s:latitude "59.641294"^^xsd:decimal ;
   v-s:longitude "33.571372"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -1018,7 +1233,7 @@ d:testLngStation26
   v-s:longitude "34.437225313492"^^xsd:decimal ;
   v-s:postalAddress "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
   v-s:parentOrganization d:org_RU5003021311 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
 .
 d:testLngStation26Supply
@@ -1031,17 +1246,36 @@ d:testLngStation26Supply
   v-s:amount "35"^^xsd:integer ;
   v-s:latitude "61.766530975769"^^xsd:decimal ;
   v-s:longitude "34.437225313492"^^xsd:decimal ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
-d:testLngStation26Demand
+d:testLngStation26Demand_1
   a lng:LngDemand;
   rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
   v-s:amount "40"^^xsd:integer ;
   v-s:latitude "61.766530975769"^^xsd:decimal ;
   v-s:longitude "34.437225313492"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7826094630 ;
-  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:dateFrom "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation26Demand_2
+  a lng:LngDemand;
+  rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "61.766530975769"^^xsd:decimal ;
+  v-s:longitude "34.437225313492"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7724261610 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation26Demand_3
+  a lng:LngDemand;
+  rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
+  v-s:amount "30"^^xsd:integer ;
+  v-s:latitude "61.766530975769"^^xsd:decimal ;
+  v-s:longitude "34.437225313492"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -1054,6 +1288,48 @@ d:testLngStation27
   v-s:parentOrganization d:org_RU5003021311 ;
   v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ;
+.
+d:testLngStation27Supply
+  a lng:LngSupply;
+  rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
+  v-s:backwardTarget d:testLngStation23 ;
+  v-s:backwardProperty lng:hasSupply ;
+  v-s:canRead "true"^^xsd:boolean ;
+  v-s:parentOrganization d:org_RU5003021311 ;
+  v-s:amount "35"^^xsd:integer ;
+  v-s:latitude "61.766530975769"^^xsd:decimal ;
+  v-s:longitude "34.437225313492"^^xsd:decimal ;
+  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation27Demand_1
+  a lng:LngDemand;
+  rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
+  v-s:amount "40"^^xsd:integer ;
+  v-s:latitude "61.766530975769"^^xsd:decimal ;
+  v-s:longitude "34.437225313492"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7826094630 ;
+  v-s:dateFrom "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation27Demand_2
+  a lng:LngDemand;
+  rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
+  v-s:amount "40"^^xsd:integer ;
+  v-s:latitude "61.766530975769"^^xsd:decimal ;
+  v-s:longitude "34.437225313492"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7826094630 ;
+  v-s:dateFromPlan "2021-01-01T00:00:00.000Z"^^xsd:dateTime;
+  v-s:hasStatus lng:StatusInOperation ; 
+.
+d:testLngStation27Demand_3
+  a lng:LngDemand;
+  rdfs:label "Россия, г. Петрозаводск, ул. Онежской флотилии, стр. 14"^^xsd:string ;
+  v-s:amount "25"^^xsd:integer ;
+  v-s:latitude "61.766530975769"^^xsd:decimal ;
+  v-s:longitude "34.437225313492"^^xsd:decimal ;
+  v-s:parentOrganization d:org_RU7715356456 ;
+  v-s:hasStatus lng:StatusInOperation ; 
 .
 #-------------------------мобильные станции
 d:testLngMobileStation1
