@@ -1,0 +1,301 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix v-s: <http://semantic-machines.com/veda/veda-schema/> .
+@prefix v-ui: <http://semantic-machines.com/veda/veda-ui/> .
+@prefix v-fc: <http://semantic-machines.com/veda/veda-function-create/> .
+@prefix v-fs: <http://semantic-machines.com/veda/veda-function-search/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lng: <http://semantic-machines.com/veda/lng-schema/> .
+
+<http://semantic-machines.com/veda/lng-analysis>
+  rdf:type owl:Ontology ;
+  rdfs:label "Онтология анализа"@ru ;
+  rdfs:label "Analysis ontology"@en ;
+  v-s:loadPriority 9 ;
+.
+
+lng:MapAnalysis
+  rdf:type rdfs:Resource ;
+  rdfs:label "Анализ"@ru ;
+  rdfs:label "Analysis"@en ;
+  v-ui:hasTemplate lng:MapAnalysisTemplate ;
+  v-ui:hasModel lng:MapAnalysisModel;
+.
+
+lng:MapAnalysisModel
+  rdf:type v-ui:ClassModel ;
+  v-ui:forClass lng:Map ;
+  rdfs:label "Модель анализа карты"@ru ;
+  rdfs:label "Map analysis model"@en ;
+  v-s:script """
+  //# sourceURL=lng:MapAnalysisModel
+  """ ;
+.
+
+lng:MapAnalysisTemplate
+  rdf:type v-ui:ClassTemplate ;
+  rdfs:label "Шаблон анализа карты"@ru ;
+  rdfs:label "Map analysis template"@en ;
+  v-ui:template """
+<div>
+  <div about="lng:DemandSupplyChart"></div>
+  <hr>
+  <div about="lng:HistoryChart"></div>
+</div>
+<script>
+  //# sourceURL=lng:MapAnalysisTemplate_post
+</script>
+  """ ;
+.
+
+lng:DemandSupplyChart
+  rdf:type rdfs:Resource ;
+  rdfs:label "Диаграмма спрос - предложение"@ru ;
+  rdfs:label "Demand - supply chart"@en ;
+  v-ui:hasTemplate lng:DemandSupplyChartTemplate ;
+  v-ui:hasModel lng:DemandSupplyChartModel;
+.
+
+lng:DemandSupplyChartModel
+  rdf:type v-ui:ClassModel ;
+  v-ui:forClass lng:Map ;
+  rdfs:label "Модель диаграммы спрос - предложение"@ru ;
+  rdfs:label "Demand - supply chart model"@en ;
+  v-s:script """
+
+  var inited;
+
+  this._init = function () {
+    if (inited) {
+      return inited;
+    }
+    var lngMap = new veda.IndividualModel("lng:Map");
+    return inited = lngMap.load().then(function (lngMap) {
+      return lngMap._init();
+    });
+  };
+  
+  //# sourceURL=lng:DemandSupplyChartModel
+  """ ;
+.
+
+lng:DemandSupplyChartTemplate
+  rdf:type v-ui:ClassTemplate ;
+  rdfs:label "Шаблон диаграммы спрос - предложение"@ru ;
+  rdfs:label "Demand - supply chart template"@en ;
+  v-ui:template """
+<script>
+  if ( !window.Chart ) {
+    return veda.Backend.load_script("./js/browser/lib/Chart.min.js", document.body);
+  }
+</script>
+<div>
+  <h3 class="text-center" about="@" property="rdfs:label"></h3>
+  <div id="chart-holder" style="width:58%; margin: 0 auto;">
+    <canvas id="demand-supply-chart" width="200" height="200"></canvas>
+  </div>
+</div>
+<script>
+
+  var self = this;
+
+  this.chartColors = {
+    red: 'rgb(231, 76, 60)',
+    orange: 'rgb(243, 156, 18)',
+    yellow: 'rgb(241, 196, 15)',
+    green: 'rgb(39, 174, 96)',
+    blue: 'rgb(52, 152, 219)',
+    purple: 'rgb(155, 89, 182)',
+    grey: 'rgb(189, 195, 199)'
+  };
+
+  this._init()
+    .then(function (mapIndividual) {
+      var individuals = mapIndividual["lng:ObjectsOnMap"];
+      var data = mkData(individuals);
+      self.drawDemandSupplyChart(data);
+      
+      mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
+        var data = mkData(individuals);
+        self.DemandSupplyChart.config.data.datasets[0].data = data;
+        self.DemandSupplyChart.update();
+      });
+    });
+
+  function mkData(individuals) {
+    return individuals.reduce(function (integral, item) {
+      if (item.hasValue("rdf:type", "lng:LngDemand") && item.hasValue("v-s:amount")) {
+        integral[0] += item["v-s:amount"][0];
+      } else if (item.hasValue("rdf:type", "lng:LngSupply") && item.hasValue("v-s:amount")) {
+        integral[1] += item["v-s:amount"][0];
+      }
+      return integral;
+    }, [0, 0]);
+  }
+
+  this.drawDemandSupplyChart = function (data) {
+    
+    Chart.defaults.global.defaultFontSize = 14;
+    var config = {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: data,
+					backgroundColor: [
+						self.chartColors.red,
+						self.chartColors.green,
+					],
+					label: 'Спрос / Предложение'
+				}],
+				labels: [
+					'Спрос',
+					'Предложение',
+				]
+			},
+			options: {
+				responsive: true
+			}
+		};
+
+    var ctx = document.getElementById('demand-supply-chart').getContext('2d');
+    this.DemandSupplyChart = new Chart(ctx, config);
+  };
+
+  //# sourceURL=lng:DemandSupplyChartTemplate_post
+</script>
+  """ ;
+.
+
+lng:HistoryChart
+  rdf:type rdfs:Resource ;
+  rdfs:label "Диаграмма история развития"@ru ;
+  rdfs:label "Development history chart"@en ;
+  v-ui:hasTemplate lng:HistoryChartTemplate ;
+  v-ui:hasModel lng:HistoryChartModel ;
+.
+
+lng:HistoryChartModel
+  rdf:type v-ui:ClassModel ;
+  v-ui:forClass lng:Map ;
+  rdfs:label "Модель диаграммы истории развития"@ru ;
+  rdfs:label "History chart model"@en ;
+  v-s:script """
+
+  var inited;
+
+  this._init = function () {
+    if (inited) {
+      return inited;
+    }
+    var lngMap = new veda.IndividualModel("lng:Map");
+    return inited = lngMap.load().then(function (lngMap) {
+      return lngMap._init();
+    });
+  };
+  
+  //# sourceURL=lng:HistoryChartModel
+  """ ;
+.
+
+lng:HistoryChartTemplate
+  rdf:type v-ui:ClassTemplate ;
+  rdfs:label "Шаблон диаграммы истории развития"@ru ;
+  rdfs:label "Development history chart template"@en ;
+  v-ui:template """
+<script>
+  if ( !window.Chart ) {
+    return veda.Backend.load_script("./js/browser/lib/Chart.min.js", document.body);
+  }
+</script>
+<div>
+  <h3 class="text-center" about="@" property="rdfs:label"></h3>
+  <div id="chart-holder" style="width:75%; margin: 0 auto;">
+    <canvas id="history-chart" width="200" height="200"></canvas>
+  </div>
+</div>
+<script>
+
+  var self = this;
+
+  this.chartColors = {
+    orange: 'rgb(211, 84, 0)',
+    yellow: 'rgb(241, 196, 15)',
+    grey: 'rgb(127, 140, 141)'
+  };
+
+  this._init()
+    .then(function (mapIndividual) {
+      var individuals = mapIndividual["lng:ObjectsOnMap"];
+      //~ var data = mkData(individuals);
+      self.drawDemandSupplyChart(data);
+      
+      //~ mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
+        //~ var data = mkData(individuals);
+        //~ self.DemandSupplyChart.config.data.datasets[0].data = data;
+        //~ self.DemandSupplyChart.update();
+      //~ });
+    });
+
+  function mkData(individuals) {
+    return individuals.reduce(function (integral, item) {
+      if (item.hasValue("rdf:type", "lng:LngDemand") && item.hasValue("v-s:amount")) {
+        integral[0] += item["v-s:amount"][0];
+      } else if (item.hasValue("rdf:type", "lng:LngSupply") && item.hasValue("v-s:amount")) {
+        integral[1] += item["v-s:amount"][0];
+      }
+      return integral;
+    }, [0, 0]);
+  }
+
+	var data = {
+		labels: ['2017', '2018', '2019', '2020', '2021'],
+		datasets: [{
+			label: 'Действует',
+			backgroundColor: self.chartColors.orange,
+			data: [10, 20, 30, 15, 11]
+		}, {
+			label: 'Запланировано',
+			backgroundColor: self.chartColors.yellow, 
+			data: [15, 25, 31, 15, 17]
+		}, {
+			label: 'Обсуждается',
+			backgroundColor: self.chartColors.gray,
+			data: [21, 44, 51, 25, 71]
+		}]
+	};
+
+  Chart.defaults.global.defaultFontSize = 14;
+  var config = {
+    type: 'bar',
+    data: data,
+    options: {
+      title: {
+        display: true,
+        text: 'История развития'
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false
+      },
+      responsive: true,
+      scales: {
+        xAxes: [{
+          stacked: true,
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      }
+    }
+  };
+
+  this.drawDemandSupplyChart = function () {
+    var ctx = document.getElementById('history-chart').getContext('2d');
+    this.DemandSupplyChart = new Chart(ctx, config);
+  };
+
+  //# sourceURL=lng:HistoryChartTemplate_post
+</script>
+  """ ;
+.
