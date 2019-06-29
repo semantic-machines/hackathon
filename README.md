@@ -5,4 +5,5 @@
 Linux ubuntu 18.04:
 
 1. создать папку hackathon (название папки не фиксированно и может быть иным) и зайти в нее
-2. curl https://raw.githubusercontent.com/semantic-machines/hackathon/master/install.sh -sSf | sh
+2. выполнить команду: curl https://raw.githubusercontent.com/semantic-machines/hackathon/master/install.sh -sSf | sh
+3. подождать 2-3 минуты для первичной инициализации платформы и установки конкурсного проекта, далее открыть приложение в браузере по ссылке: http://127.0.0.1
