@@ -73,17 +73,15 @@ lng:MapModel
       self.map.geoObjects.add(result.geoObjects);
 
       var customBalloonContentLayout = ymaps.templateLayoutFactory.createClass([
-            '<div class="list-group">',
-            // Выводим в цикле список всех геообъектов.
+            '<div class="list-group list-objects">',
             '{% for geoObject in properties.geoObjects %}',
+              '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
                 '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
+              '{% endif %}',
             '{% endfor %}',
             '</div>'
       ].join(''));
-      
-      // '{% if options.width > 200 %}' +
-      //   '{% include options.wideLayout %}' +
-      // '{% endif %}'
+
       self.pointsCollection = new ymaps.Clusterer({});
       self.pointsCollection.createCluster = function (center, geoObjects) {
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
@@ -121,6 +119,12 @@ lng:MapModel
         clusterPlacemark.options.set('balloonContentLayoutWidth', 300);
         return clusterPlacemark;
       };
+      self.pointsCollection.events.add('balloonopen', function (e) {
+        $("div.list-objects>a").click(function(event) {
+          var objectUri = event.target.getAttribute("href");
+          var modal = veda.Util.showModal(new veda.IndividualModel(objectUri), undefined, "view");
+        })
+      });
 
       // self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
       //   var target = e.get('target');
@@ -191,8 +195,6 @@ lng:MapModel
     var query;
     if (queryString) {
       query = veda.Backend.geo_radius_query(veda.ticket, center[0], center[1], radius, queryString);
-      // console.log(self.map.getBounds());
-      // console.log(center[0], center[1], radius);
     } else {
       console.log("return []: queryString.length = " + queryString.length);
       return Promise.resolve([]);
@@ -299,15 +301,19 @@ lng:MapTemplate
   function rightClickOnMap(e){
     var coords = e.get("coords");
     map.balloon.open(e.get('coords'), {
-      contentHeader: '<button id="add-New" class="btn btn-sm btn-primary">Добавить объект</button>'
+      contentHeader: '<div class="btn-group"><button id="add-NewObject" class="btn btn-sm btn-primary">Добавить объект</button><button id="add-NewDemand" class="btn btn-sm btn-default">Добавить спрос</button></div>'
     }).then(function(result) {
-      $("#add-New",template).click(function(){
+      $("#add-NewObject",template).click(function(){
         addNewPoint(coords);
         // var myPlacemark = new ymaps.Placemark(coords, {}, {
         //   preset: "islands#medicalCircleIcon",
         //   iconColor: "#28a745"
         // });
         // map.geoObjects.add(myPlacemark);
+        map.balloon.close();
+      });
+      $("#add-NewDemand",template).click(function(){
+        addNewPoint("demand", coords);
         map.balloon.close();
       })
     });
@@ -321,14 +327,25 @@ lng:MapTemplate
     });
   }
 
-  function addNewPoint(coords) {
+  function addNewPoint(type, coords) {
     var individ = new veda.IndividualModel();
+    var tmpl;
+    if (type === "demand") {
+      individ["rdf:type"] = [new veda.IndividualModel("lng:LngDemand")];
+      tmpl = "lng:LngDemandTemplate";
+    } else {
+      tmpl = "lng:NewMapPointTemplate";
+    }
     // individ["rdf:type"] = [new veda.IndividualModel("lng:StationaryFillingStation")];
     if (coords) {
       individ["v-s:latitude"] = [coords[0]];
       individ["v-s:longitude"] = [coords[1]];
     }
-    riot.route( ["#", individ.id, "#main", "lng:NewMapPointTemplate", "edit"].join("/") );
+    var modal = veda.Util.showModal(individ, tmpl, "edit");
+    modal.one("remove", function (e) {
+      individual.showPoints();
+    });
+    //riot.route( ["#", individ.id, "#main", template, "edit"].join("/") );
     // individ.present($("<div>"), "lng:NewMapPointTemplate", "edit").then(function (tmpl) {
     //   $("#show-PointInfo", template).empty().append(tmpl);
     // });
@@ -528,7 +545,6 @@ lng:MapFilterTemplate
     <h5 class="section-header" about="lng:hasFilteredStatus" property="rdfs:label"></h5>
     <veda-control rel="lng:hasFilteredStatus" data-type="checkbox" class="view edit -search"></veda-control>  
   </section>
- 
 </div>
 <script>
   $()
@@ -537,7 +553,6 @@ lng:MapFilterTemplate
   }
   individual.on("lng:hasFilteredTypes lng:hasFilteredAnaliz lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
   var lngMap = new veda.IndividualModel("lng:Map");
-  template.append(lngMap["rdfs:label"]);
 
   template.on("remove", function() {
     individual.off("lng:hasFilteredTypes lng:hasFilteredAnaliz lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
