@@ -545,7 +545,6 @@ lng:MapFilterTemplate
     <h5 class="section-header" about="lng:hasFilteredStatus" property="rdfs:label"></h5>
     <veda-control rel="lng:hasFilteredStatus" data-type="checkbox" class="view edit -search"></veda-control>  
   </section>
- 
 </div>
 <script>
   $()
@@ -554,7 +553,6 @@ lng:MapFilterTemplate
   }
   individual.on("lng:hasFilteredTypes lng:hasFilteredAnaliz lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
   var lngMap = new veda.IndividualModel("lng:Map");
-  template.append(lngMap["rdfs:label"]);
 
   template.on("remove", function() {
     individual.off("lng:hasFilteredTypes lng:hasFilteredAnaliz lng:hasFilteredOrganization lng:hasFilteredStatus", filtered);
