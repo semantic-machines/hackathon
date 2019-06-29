@@ -41,7 +41,7 @@ lng:MapAnalysisTemplate
 <div>
   <div about="lng:DemandSupplyChart"></div>
   <hr>
-  <div about="lng:HistoryChart"></div>
+  <div about="lng:DevelopmentChart"></div>
 </div>
 <script>
   //# sourceURL=lng:MapAnalysisTemplate_post
@@ -113,17 +113,17 @@ lng:DemandSupplyChartTemplate
   this._init()
     .then(function (mapIndividual) {
       var individuals = mapIndividual["lng:ObjectsOnMap"];
-      var data = mkData(individuals);
+      var data = calcData(individuals);
       self.drawDemandSupplyChart(data);
       
       mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
-        var data = mkData(individuals);
+        var data = calcData(individuals);
         self.DemandSupplyChart.config.data.datasets[0].data = data;
         self.DemandSupplyChart.update();
       });
     });
 
-  function mkData(individuals) {
+  function calcData(individuals) {
     return individuals.reduce(function (integral, item) {
       if (item.hasValue("rdf:type", "lng:LngDemand") && item.hasValue("v-s:amount")) {
         integral[0] += item["v-s:amount"][0];
@@ -167,19 +167,19 @@ lng:DemandSupplyChartTemplate
   """ ;
 .
 
-lng:HistoryChart
+lng:DevelopmentChart
   rdf:type rdfs:Resource ;
-  rdfs:label "Диаграмма история развития"@ru ;
-  rdfs:label "Development history chart"@en ;
-  v-ui:hasTemplate lng:HistoryChartTemplate ;
-  v-ui:hasModel lng:HistoryChartModel ;
+  rdfs:label "Диаграмма развития"@ru ;
+  rdfs:label "Development chart"@en ;
+  v-ui:hasTemplate lng:DevelopmentChartTemplate ;
+  v-ui:hasModel lng:DevelopmentChartModel ;
 .
 
-lng:HistoryChartModel
+lng:DevelopmentChartModel
   rdf:type v-ui:ClassModel ;
   v-ui:forClass lng:Map ;
-  rdfs:label "Модель диаграммы истории развития"@ru ;
-  rdfs:label "History chart model"@en ;
+  rdfs:label "Модель диаграммы развития"@ru ;
+  rdfs:label "Development chart model"@en ;
   v-s:script """
 
   var inited;
@@ -194,14 +194,14 @@ lng:HistoryChartModel
     });
   };
   
-  //# sourceURL=lng:HistoryChartModel
+  //# sourceURL=lng:DevelopmentChartModel
   """ ;
 .
 
-lng:HistoryChartTemplate
+lng:DevelopmentChartTemplate
   rdf:type v-ui:ClassTemplate ;
-  rdfs:label "Шаблон диаграммы истории развития"@ru ;
-  rdfs:label "Development history chart template"@en ;
+  rdfs:label "Шаблон диаграммы развития"@ru ;
+  rdfs:label "Development chart template"@en ;
   v-ui:template """
 <script>
   if ( !window.Chart ) {
@@ -227,25 +227,41 @@ lng:HistoryChartTemplate
   this._init()
     .then(function (mapIndividual) {
       var individuals = mapIndividual["lng:ObjectsOnMap"];
-      //~ var data = mkData(individuals);
+      var data = calcData(individuals);
       self.drawDemandSupplyChart(data);
       
-      //~ mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
-        //~ var data = mkData(individuals);
-        //~ self.DemandSupplyChart.config.data.datasets[0].data = data;
-        //~ self.DemandSupplyChart.update();
-      //~ });
+      mapIndividual.on("lng:ObjectsOnMap", function (individuals) {
+        var data = calcData(individuals);
+        self.DemandSupplyChart.config.data.datasets[0].data = data[0];
+        self.DemandSupplyChart.config.data.datasets[1].data = data[1];
+        self.DemandSupplyChart.config.data.datasets[2].data = data[2];
+        self.DemandSupplyChart.update();
+      });
     });
 
-  function mkData(individuals) {
-    return individuals.reduce(function (integral, item) {
-      if (item.hasValue("rdf:type", "lng:LngDemand") && item.hasValue("v-s:amount")) {
-        integral[0] += item["v-s:amount"][0];
-      } else if (item.hasValue("rdf:type", "lng:LngSupply") && item.hasValue("v-s:amount")) {
-        integral[1] += item["v-s:amount"][0];
+  var baseYear = 2017;
+  var years = 5;
+  function calcData(individuals) {
+    return individuals.reduce(function (acc, item) {
+      var created = item.hasValue("v-s:created") ? item["v-s:created"][0].getFullYear() - baseYear : undefined;
+      var plan = item.hasValue("v-s:dateFromPlan") ? item["v-s:dateFromPlan"][0].getFullYear() - baseYear : undefined;
+      var fact = item.hasValue("v-s:dateFrom") ? item["v-s:dateFrom"][0].getFullYear() - baseYear : undefined;
+      var amount = item.hasValue("v-s:amount") ? item["v-s:amount"][0] : 0;
+      
+      var i;
+      if (created && !plan && !fact) {
+        acc[2][created] = (acc[2][created] || 0) + amount;
+      } else if (fact) {
+        for (i = fact; i < years; i++) {
+          acc[0][i] = (acc[0][i] || 0) + amount;
+        }
+      } else if (plan && !fact) {
+        for (i = plan; i < years; i++) {
+          acc[1][i] = (acc[1][i] || 0) + amount;
+        }
       }
-      return integral;
-    }, [0, 0]);
+      return acc;
+    }, [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]); // [fact, plan, expect]
   }
 
 	var data = {
@@ -253,15 +269,15 @@ lng:HistoryChartTemplate
 		datasets: [{
 			label: 'Действует',
 			backgroundColor: self.chartColors.orange,
-			data: [10, 20, 30, 15, 11]
+			data: []
 		}, {
 			label: 'Запланировано',
 			backgroundColor: self.chartColors.yellow, 
-			data: [15, 25, 31, 15, 17]
+			data: []
 		}, {
 			label: 'Обсуждается',
 			backgroundColor: self.chartColors.gray,
-			data: [21, 44, 51, 25, 71]
+			data: []
 		}]
 	};
 
@@ -271,7 +287,7 @@ lng:HistoryChartTemplate
     data: data,
     options: {
       title: {
-        display: true,
+        display: false,
         text: 'История развития'
       },
       tooltips: {
@@ -290,12 +306,15 @@ lng:HistoryChartTemplate
     }
   };
 
-  this.drawDemandSupplyChart = function () {
+  this.drawDemandSupplyChart = function (data) {
     var ctx = document.getElementById('history-chart').getContext('2d');
+    config.data.datasets[0].data = data[0];
+    config.data.datasets[1].data = data[1];
+    config.data.datasets[2].data = data[2];
     this.DemandSupplyChart = new Chart(ctx, config);
   };
 
-  //# sourceURL=lng:HistoryChartTemplate_post
+  //# sourceURL=lng:DevelopmentChartTemplate_post
 </script>
   """ ;
 .
