@@ -36,6 +36,12 @@ lng:SignOut
   rdfs:label "Sign out"@en ;
 .
 
+lng:SignUp
+  rdf:type rdfs:Resource ;
+  rdfs:label "Регистрация"@ru ;
+  rdfs:label "Sign up"@en ;
+.
+
 lng:LayoutTemplate
   rdf:type v-ui:ClassTemplate ;
   rdfs:label "Шаблон макета"@ru ;
@@ -80,6 +86,29 @@ lng:LayoutTemplate
     $(".lng-control", template).addClass("hide");
   });
 
+  // Sign up
+  var signUp = $("#sign-up", template);
+  var signUpApplication;
+  if (veda.user.id !== "cfg:Guest") {
+    signUp.hide();
+  } else {
+    signUp.click(function () {
+      var modal;
+      if (!signUpApplication) {
+        signUpApplication = new veda.IndividualModel();
+        signUpApplication["rdf:type"] = [ new veda.IndividualModel("lng:AccessRequest") ];
+        modal = veda.Util.showSmallModal(signUpApplication, undefined, "edit");
+      } else if ( signUpApplication.isNew() ) {
+        modal = veda.Util.showSmallModal(signUpApplication, undefined, "edit");
+      } else {
+        modal = veda.Util.showSmallModal(signUpApplication, undefined, "view");
+      }
+      signUpApplication.one("afterSave afterReset", function () {
+        modal.modal("hide").remove();
+      });
+    });
+  }
+  
   //# sourceURL=v-s:MainPageTemplate
 </script>
 <div class="lng-container">
@@ -97,6 +126,7 @@ lng:LayoutTemplate
         <li><a id="user-info"></a></li>
         <li id="sign-in"><a style="cursor:pointer"><i class="fa fa-lg fa-sign-in"></i> <span about="lng:SignIn" property="rdfs:label"></span></a></li>
         <li id="sign-out"><a style="cursor:pointer"><i class="fa fa-lg fa-sign-out"></i> <span about="lng:SignOut" property="rdfs:label"></span></a></li>
+        <li id="sign-up"><a style="cursor:pointer"><i class="fa fa-lg fa-user-plus"></i> <span about="lng:SignUp" property="rdfs:label"></span></a></li>
         <!--li about="v-ui:AvailableLanguage" data-template="v-ui:LanguageSwitchTemplate" data-switch-behavior="radio"></li-->
       </ul>
     </nav>
