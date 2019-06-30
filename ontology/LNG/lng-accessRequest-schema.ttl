@@ -35,3 +35,13 @@ lng:organizationName
   rdfs:range v-s:AccessRequest ;
   rdfs:domain v-s:Thing ;
 .
+
+#--------------------права для гостя
+lng:Guest_AccessRequest_permission
+  rdf:type v-s:PermissionStatement ;
+  v-s:permissionObject lng:AccessRequest ;
+  v-s:permissionSubject cfg:Guest ;
+  v-s:canRead "true"^^xsd:boolean ;
+  v-s:canCreate "true"^^xsd:boolean ;
+  rdfs:label "C. Guest права" ;
+.
