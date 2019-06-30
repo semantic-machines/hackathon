@@ -10,10 +10,10 @@ echo INSTALL HAPROXY
 sudo cp -v haproxy.cfg /etc/haproxy
 ./install-haproxy.sh
 cd ..
-pause 10
+sleep 10
 echo START VEDA
 ./control-start.sh
-pause 90
+sleep 60
 echo INSTALL HACKATON PROJECT
 wget https://github.com/semantic-machines/hackathon/archive/master.zip
 unzip master.zip
