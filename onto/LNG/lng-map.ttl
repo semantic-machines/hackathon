@@ -95,21 +95,28 @@ lng:MapModel
           }
           return result;
         }, [0, 0, 0]);
-        if (weights[2] === 1) weights[2] = "<span style='color:#888888' class='glyphicon glyphicon-oil'></span>"
+        var outerRadius = 18;
+        if (weights[2] === 1) {
+          weights[2] = "<span style='color:#888888' class='glyphicon glyphicon-oil'></span>";
+        } else {
+          outerRadius = outerRadius + 2 * Math.log(weights[2]);
+        }
+        var innerRadius = outerRadius - 5;
         if ( (weights[0] || weights[1]) ) {
           clusterPlacemark.properties.set({
             // Данные для построения диаграммы.
             data: [
-                { weight: weights[0], color: '#28a745' },
-                { weight: weights[1], color: '#dc3545' }
+                { weight: weights[0], color: '#dc3545' },
+                { weight: weights[1], color: '#28a745' }
             ],
             iconContent: weights[2]
           });
-          clusterPlacemark.options.set("iconPieChartRadius", 20);
-          clusterPlacemark.options.set("iconPieChartCoreRadius", 14);
-          // clusterPlacemark.options.set("iconPieChartStrokeWidth", 3);
-          clusterPlacemark.options.set('iconLayout', 'default#pieChart');
         }
+
+        clusterPlacemark.options.set("iconPieChartRadius", outerRadius);
+        clusterPlacemark.options.set("iconPieChartCoreRadius", innerRadius);
+        // clusterPlacemark.options.set("iconPieChartStrokeWidth", 3);
+        clusterPlacemark.options.set('iconLayout', 'default#pieChart');
         clusterPlacemark.options.set('balloonContentLayout', customBalloonContentLayout);
 
         clusterPlacemark.options.set('disableClickZoom', true);
