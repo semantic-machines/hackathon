@@ -3,15 +3,16 @@ echo INSTALL VEDA
 wget https://github.com/semantic-machines/veda/releases/download/v5.4.6/Veda-x86_64.AppImage
 chmod u+x Veda-x86_64.AppImage
 ./Veda-x86_64.AppImage
+cd install-tools
 echo INSTALL DBs
-./install-tools/install-dbs.sh
+./install-dbs.sh
 echo INSTALL HAPROXY
-./install-tools/install-haproxy.sh
-sudo cp -v ./install-tools/haproxy.cfg /etc/haproxy
-echo INSTALL HACKATON PROJECT
-cp -v public/index.html 
+./install-haproxy.sh
+cd ..
+echo START VEDA
 ./control-start.sh
 pause 30
+echo INSTALL HACKATON PROJECT
 wget https://github.com/semantic-machines/hackathon/archive/master.zip
 unzip master.zip
 rm master.zip
