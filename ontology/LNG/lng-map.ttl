@@ -332,7 +332,7 @@ lng:MapTemplate
       contentHeader: '<div class="btn-group"><button id="add-NewObject" class="btn btn-sm btn-primary">Добавить объект</button><button id="add-NewDemand" class="btn btn-sm btn-default">Добавить спрос</button></div>'
     }).then(function(result) {
       $("#add-NewObject",template).click(function(){
-        addNewPoint(coords);
+        addNewPoint("", coords);
         // var myPlacemark = new ymaps.Placemark(coords, {}, {
         //   preset: "islands#medicalCircleIcon",
         //   iconColor: "#28a745"
