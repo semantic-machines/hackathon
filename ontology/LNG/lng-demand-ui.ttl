@@ -10,26 +10,27 @@
 @prefix v-fc: <http://semantic-machines.com/veda/veda-function-create/> .
 @prefix lng: <http://semantic-machines.com/veda/lng-schema/> .
 
-<http://semantic-machines.com/veda/lng-supply-ui>
+<http://semantic-machines.com/veda/lng-demand-ui>
   rdf:type owl:Ontology ;
-  rdfs:label "Онтология. Предложение. UI"@ru ;
-  rdfs:label "Ontology. Supply. UI"@en ;
+  rdfs:label "Онтология. Спрос. UI"@ru ;
+  rdfs:label "Ontology. Demand. UI"@en ;
   v-s:loadPriority 20 ;
 .
 
 #---------------------------------------------------------
-lng:LngSupplyBlank
+lng:LngDemandBlank
   a v-fc:Blank ;
-  rdfs:label "Предложение СПГ"@ru ;
-  rdfs:label "LNG supply"@en ;
-  v-fc:targetType lng:LngSupply ;
+  rdfs:label "Спрос СПГ"@ru ;
+  rdfs:label "LNG demand"@en ;
+  v-fc:targetType lng:LngDemand ;
 .
+
 #--------------------------------------
-lng:LngSupplyTemplate
+lng:LngDemandTemplate
   rdf:type v-ui:ClassTemplate ;
-  v-ui:forClass lng:LngSupplyTemplate ;
-  rdfs:label "Template for lng:LngSupplyTemplate"@en ;
-  rdfs:label "Шаблон для класса lng:LngSupplyTemplate"@ru ;
+  v-ui:forClass lng:LngDemandTemplate ;
+  rdfs:label "Template for lng:LngDemandTemplate"@en ;
+  rdfs:label "Шаблон для класса lng:LngDemandTemplate"@ru ;
   v-ui:template """
 <div>
   <div class="container sheet">
@@ -68,11 +69,11 @@ lng:LngSupplyTemplate
       </div>
       <div class="row row-attribute">
         <div class="col-sm-3 col-xs-5">
-          <label about="v-s:backwardTarget" property="rdfs:label"></label>
+          <label about="v-s:parentOrganization" property="rdfs:label"></label>
         </div>
         <div class="col-sm-9 col-xs-7">
-          <div rel="v-s:backwardTarget" class="view -edit search" data-template="v-ui:LabelTemplate"></div>
-          <veda-control data-type="link" rel="v-s:backwardTarget" class="-view edit search fulltext tree"></veda-control>
+          <div rel="v-s:parentOrganization" class="view -edit search" data-template="v-ui:LabelTemplate"></div>
+          <veda-control data-type="link" rel="v-s:parentOrganization" class="-view edit search fulltext dropdown"></veda-control>
         </div>
       </div>
       <div class="row row-attribute">
@@ -100,6 +101,15 @@ lng:LngSupplyTemplate
         <div class="col-sm-9 col-xs-7">
           <div property="v-s:longitude" class="view -edit -search"></div>
           <veda-control data-type="text" property="v-s:longitude" class="-view edit search"></veda-control>
+        </div>
+      </div>
+      <div class="row row-attribute">
+        <div class="col-sm-3 col-xs-5">
+          <label about="v-s:dateFromPlan" property="rdfs:label"></label>
+        </div>
+        <div class="col-sm-3 col-xs-3">
+          <div property="v-s:dateFromPlan" class="view -edit -search"></div>
+          <veda-control data-type="date" property="v-s:dateFromPlan" class="-view edit search"></veda-control>
         </div>
       </div>
       <div class="row row-attribute">

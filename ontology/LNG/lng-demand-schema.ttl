@@ -27,7 +27,8 @@ lng:LngDemand
   v-ui:hasTemplate lng:LngDemandTemplate ;
 .
 #v-s:description
-#v-s:datePlan
+#v-s:dateFrom
+#v-s:dateFromPlan
 #v-s:latitude
 #v-s:longitude
 #v-s:parentOrganization

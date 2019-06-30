@@ -180,6 +180,13 @@ lng:StationaryFillingStationTemplate
           <veda-control data-type="date" property="v-s:dateTo" class="-view edit search"></veda-control>
         </div>
       </div>
+      <h4 class="section-header clearfix">
+        <span about="lng:hasSupply" property="rdfs:label"></span>
+        <button class="btn btn-xs btn-success pull-right" id="add-supply">
+          <span class="glyphicon glyphicon-search"></span>
+          <span about="lng:hasSupply" property="rdfs:label"></span>
+        </button>
+      </h4>
     </section>
     <section id="SystemProperties">
       <h4 class="section-header" about="v-ui:SystemPropertiesTemplate" property="rdfs:comment"></h4>
@@ -229,6 +236,31 @@ lng:StationaryFillingStationTemplate
     </div>
   </div>
 </div>
+<script>
+  $("#add-supply", template).click(function () {
+    var modal = $("#notification-modal-template").html();
+    modal = $(modal);
+    modal.modal({"show": false});
+    $("body").append(modal);
+    modal.modal("show");
+    template.one("remove", function () {
+      modal.modal("hide").remove();
+    });
+    var cntr = $(".modal-body", modal),
+        _class = new veda.IndividualModel("lng:LngSupply"),
+        Supply = new veda.IndividualModel(),
+        tmpl = new veda.IndividualModel("lng:LngSupplyTemplate");
+    Supply["rdf:type"] = [_class];
+    Supply.present(cntr, tmpl, "edit");
+    Supply["v-s:backwardTarget"] = [individual];
+    Supply["v-s:backwardProperty"] = [new veda.IndividualModel("lng:hasSupply")];
+    Supply["v-s:canRead"] = [true];
+    Supply["v-s:hasStatus"] = [new veda.IndividualModel("lng:StatusInOperation")];
+    Supply.one("afterReset", function () {
+      modal.modal("hide").remove();
+    });
+  });
+</script>
 """
 .
 

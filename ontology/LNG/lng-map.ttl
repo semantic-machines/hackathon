@@ -73,14 +73,21 @@ lng:MapModel
       self.map.geoObjects.add(result.geoObjects);
 
       var customBalloonContentLayout = ymaps.templateLayoutFactory.createClass([
-            '<div class="list-group list-objects">',
-            '{% for geoObject in properties.geoObjects %}',
-              '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
-                '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
-              '{% endif %}',
-            '{% endfor %}'
+        '<div class="list-objects">',
+          '{% for geoObject in properties.geoObjects %}',
+            '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
+              '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
+            '{% endif %}',
+          '{% endfor %}',
+        '</div>',
+        '{% if properties.hasAnalis %}',
+          '<div style="border-top:1px #888888 solid; padding-top: 5px;">',
+            '<span style="color:#dc3545">Спрос: {{properties.data[0].weight}}</span>',
+          '</div><div>',
+            '<span style="color:#28a745">Предложение: {{properties.data[1].weight}}</span>',
+          '</div>',
+        '{% endif %}'
       ].join(''));
-      //'</div><hr><div>Спрос {{properties.data[0].weight}}</div><div>Предложения {{properties.data[1].weight}}</div>'
       self.pointsCollection = new ymaps.Clusterer({});
       self.pointsCollection.createCluster = function (center, geoObjects) {
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
@@ -111,8 +118,8 @@ lng:MapModel
             ],
             iconContent: weights[2]
           });
+          clusterPlacemark.properties.set("hasAnalis", true);
         }
-
         clusterPlacemark.options.set("iconPieChartRadius", outerRadius);
         clusterPlacemark.options.set("iconPieChartCoreRadius", innerRadius);
         // clusterPlacemark.options.set("iconPieChartStrokeWidth", 3);
