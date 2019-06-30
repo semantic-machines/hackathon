@@ -5,7 +5,7 @@ chmod u+x Veda-x86_64.AppImage
 cd install-tools
 ./install-dbs.sh
 ./install-haproxy.sh
-cp -i haproxy.cfg /etc/haproxy
+sudo cp -i haproxy.cfg /etc/haproxy
 cd ..
 cp public/index.html 
 ./control-start.sh
