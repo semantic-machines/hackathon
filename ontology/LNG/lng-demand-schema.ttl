@@ -22,8 +22,10 @@ lng:LngDemand
   rdfs:subClassOf v-s:UserThing ;
   rdfs:subClassOf v-s:Spatial ;
   rdfs:subClassOf v-s:Temporal ;
+  rdfs:subClassOf v-s:Labeled ;
   rdfs:label "Спрос на СПГ"@ru ;
   rdfs:label "LNG demand"@en ;
+  v-s:labelPattern "{@.v-s:postalAddress}" ;
   v-ui:hasTemplate lng:LngDemandTemplate ;
 .
 #v-s:description

@@ -23,8 +23,10 @@ lng:LngSupply
   rdfs:subClassOf v-s:Spatial ;
   rdfs:subClassOf v-s:Temporal ;
   rdfs:subClassOf v-s:BackwardLink ;
+  rdfs:subClassOf v-s:Labeled ;
   rdfs:label "Предложение СПГ"@ru ;
   rdfs:label "LNG supply"@en ;
+  v-s:labelPattern "{@.v-s:postalAddress}" ;
   v-ui:hasTemplate lng:LngSupplyTemplate ;
 .
 #v-s:description
