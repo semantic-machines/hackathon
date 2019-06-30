@@ -26,7 +26,6 @@ lng:AccessRequest
   v-ui:hasTemplate lng:AccessRequestTemplate ;
 .
 #v-s:name
-#v-s:login
 #v-s:mailbox
 #v-s:phone
 lng:organizationName

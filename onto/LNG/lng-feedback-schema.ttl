@@ -23,7 +23,7 @@ lng:Feedback
   rdfs:subClassOf v-s:Contractual ;
   rdfs:label "Обратная связь"@ru ;
   rdfs:label "Feedback"@en ;
-  v-ui:hasTemplate lng:AccessRequestTemplate ;
+  v-ui:hasTemplate lng:FeedbackTemplate ;
 .
 #v-s:initiator
 #v-s:description
