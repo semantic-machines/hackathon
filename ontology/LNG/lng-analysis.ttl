@@ -254,8 +254,7 @@ lng:DevelopmentChartTemplate
       function calcData(individuals) {
         var baseYear = 2017;
         var years = 5;
-        var facts = 0, plans = 0, expects = 0, other = 0;
-        var result = individuals.reduce(function (acc, item) {
+        return individuals.reduce(function (acc, item) {
           var created = item.hasValue("v-s:created") ? item["v-s:created"][0].getFullYear() : undefined;
           var plan = item.hasValue("v-s:dateFromPlan") ? item["v-s:dateFromPlan"][0].getFullYear() : undefined ;
           var fact = item.hasValue("v-s:dateFrom") ? item["v-s:dateFrom"][0].getFullYear() : undefined;
@@ -266,28 +265,19 @@ lng:DevelopmentChartTemplate
             for (i = created - baseYear; i < years; i++) {
               acc[2][i] = (acc[2][i] || 0) + amount;
             }
-            expects++;
           } else if (fact) {
             for (i = fact - baseYear; i < years; i++) {
               acc[0][i] = (acc[0][i] || 0) + amount;
             }
-            facts++;
-          } else if (plan && !fact) {
+          } else if (plan) {
             for (i = plan - baseYear; i < years; i++) {
               acc[1][i] = (acc[1][i] || 0) + amount;
             }
-            plans++;
-          } else {
-            console.log("Other", JSON.stringify(item.properties));
-            other++;
           }
           return acc;
         }, [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]); // [fact, plan, expect]
-        
-        console.log("facts = %s, plans = %s, expects = %s, other = %s", facts, plans, expects, other);
-        
-        return result;
       }
+      
     });
 
   this.drawChart = function (data) {
