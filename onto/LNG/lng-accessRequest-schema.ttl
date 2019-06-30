@@ -1,0 +1,38 @@
+@prefix d: <http://semantic-machines.com/veda/veda-data/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix v-s: <http://semantic-machines.com/veda/veda-schema/> .
+@prefix v-ui: <http://semantic-machines.com/veda/veda-ui/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix v-wf: <http://semantic-machines.com/veda/veda-workflow/> .
+@prefix cfg: <http://semantic-machines.com/veda/config/> .
+@prefix v-fc: <http://semantic-machines.com/veda/veda-function-create/> .
+@prefix lng: <http://semantic-machines.com/veda/lng-schema/> .
+
+<http://semantic-machines.com/veda/lng-accessRequest-schema>
+  rdf:type owl:Ontology ;
+  rdfs:label "Онтология. Запрос на доступ. Схема"@ru ;
+  rdfs:label "Ontology. Access request. Schema"@en ;
+  v-s:loadPriority 20 ;
+.
+#------------------------------------
+lng:AccessRequest
+  rdf:type owl:Class ;
+  rdfs:subClassOf v-s:UserThing ;
+  rdfs:subClassOf v-s:Deliverable2 ;
+  rdfs:label "Запрос на доступ"@ru ;
+  rdfs:label "Access request"@en ;
+  v-ui:hasTemplate lng:AccessRequestTemplate ;
+.
+#v-s:name
+#v-s:login
+#v-s:mailbox
+#v-s:phone
+lng:organizationName
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "Организация"@ru ;
+  rdfs:label "Organization"@en ;
+  rdfs:range v-s:AccessRequest ;
+  rdfs:domain v-s:Thing ;
+.
