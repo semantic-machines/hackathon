@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Veda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet"/>
+    <!--link href="./css/bootstrap-theme.min.css" rel="stylesheet"/-->
+
+    <!-- Bootswatch themes (good) -->
+    <!--link href="./css/united.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/cerulean.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/journal.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/lumen.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/paper.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/simplex.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/spacelab.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/yeti.bootstrap.min.css" rel="stylesheet"/-->
+
+    <!-- Bootswatch themes (bad) -->
+    <!--link href="./css/readable.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/sandstone.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/slate.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/cosmo.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/cyborg.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/darkly.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/flatly.bootstrap.min.css" rel="stylesheet"/-->
+    <!--link href="./css/superhero.bootstrap.min.css" rel="stylesheet"/-->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=76ef213a-9281-443f-9b41-9e3960d55ef1&lang=ru_RU" type="text/javascript"></script>
+    <link href="./css/codemirror/codemirror.css" rel="stylesheet"/>
+    <link href="./css/codemirror/fullscreen.css" rel="stylesheet"/>
+    <link href="./css/fullcalendar.min.css" rel="stylesheet"/>
+    <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+    <link href="./css/veda.css" rel="stylesheet"/>
+    <link href="./css/veda-lng.css" rel="stylesheet"/>
+    <link href="./css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="./favicon.png"/>
+
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+  </head>
+  <body>
+    <!-- Login form -->
+    <div style="display:none;" class="login-form">
+      <form role="form">
+        <h3>Войдите / Sign in</h3>
+        <fieldset id="enter-login-password">
+          <input class="form-control input-lg" id="login" placeholder="login" type="text" name="login" autofocus="autofocus"/>
+          <input class="form-control input-lg" id="password" placeholder="password" type="password" name="password"/>
+          <br>
+          <button type="submit" id="submit-login-password" class="btn btn-lg btn-primary btn-block">Войти / Sign in</button>
+          <button type="submit" id="forgot-password" class="btn btn-link btn-block btn-sm">Забыли пароль? / Forgot password?</button>
+        </fieldset>
+        <fieldset id="enter-new-password" style="display:none;">
+          <input class="form-control input-lg" id="new-password" placeholder="Новый пароль / New password" type="password" name="new-password"/>
+          <!--input class="form-control input-lg" id="retype-new-password" placeholder="retype new password" type="password" name="retype-new-password"/-->
+          <input class="form-control input-lg" id="secret" placeholder="Код из письма / Code from e-mail" type="text" name="secret"/>
+          <br>
+          <button type="submit" id="submit-new-password" class="btn btn-lg btn-primary btn-block">Отправить / Submit</button>
+          <button type="submit" id="request-secret" class="btn btn-link btn-block btn-sm">Запросить новый код / Request new code</button>
+        </fieldset>
+        <br>
+        <div id="login-failed-error" style="display:none;" class="alert alert-danger">
+          <p><strong>Ошибка!</strong> Неверное имя пользователя или пароль.</p>
+          <p><strong>Error!</strong> Wrong login or password.</p>
+        </div>
+        <div id="password-expired-error" style="display:none;" class="alert alert-danger">
+          <p><strong>Ошибка!</strong> Истекло время действия пароля.</p>
+          <p><strong>Error!</strong> Password expired.</p>
+        </div>
+        <div id="invalid-secret-error" style="display:none;" class="alert alert-danger">
+          <p><strong>Ошибка!</strong> Неверный код. Повторите попытку с новым кодом.</p>
+          <p><strong>Error!</strong> Invalid secret code. Try with new secret code.</p>
+        </div>
+        <div id="invalid-password-error" style="display:none;" class="alert alert-danger">
+          <p><strong>Ошибка!</strong> Новый пароль не принят. Введите другой пароль.</p>
+          <p><strong>Error!</strong> New password was not accepted. Enter another password.</p>
+        </div>
+        <div id="secret-request-info" style="display:none;" class="alert alert-info">
+          <p><strong>Инфо!</strong> Вам выслан новый код для смены пароля.</p>
+          <p><strong>Info!</strong> New secret code sent. Try to change password with new secret code.</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Autocomplete feature -->
+    <iframe name="autocomplete-frame" style="display:none" src="about:blank"></iframe>
+    <form id="app-form" target="autocomplete-frame" method="post" action="about:blank" autocomplete="on" onkeypress="return (event.keyCode !== 13 || event.target.tagName === 'TEXTAREA')">
+      <!-- Application container -->
+      <div id="app"></div>
+    </form>
+
+    <!-- Load indicator -->
+    <div id="load-indicator" style="display:none;">
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    </div>
+
+    <!-- Notification alerts -->
+    <div id="notification-container"></div>
+
+    <!-- TEMPLATES -->
+
+    <!-- Notification alert -->
+    <script type="html/template" id="notification-template">
+      <div class="alert alert-notify fade in" role="alert">
+        <p class="note"><strong class="note-icon"></strong> <strong class="note-code"></strong> <strong class="note-name"></strong> <span class="note-message"></span></p>
+      </div>
+    </script>
+
+    <!-- Drafts template -->
+    <script type="html/template" id="drafts-template">
+      <div id="drafts" class="container sheet">
+        <h2 id="drafts-title"></h2>
+        <hr>
+        <ol id="drafts-list"></ol>
+        <button id="delete-all" class="btn btn-default"></button>
+      </div>
+    </script>
+
+    <!-- MODALS -->
+
+    <!-- Minimal modal -->
+    <script type="html/template" id="minimal-modal-template">
+      <div class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
+               <button type="button" class="close" data-dismiss="modal"><span class="fa fa-2x fa-times"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- Confirm modal -->
+    <script type="html/template" id="confirm-modal-template">
+      <div class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary ok" data-dismiss="modal">Ok</button>
+              <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- Individual modal -->
+    <script type="html/template" id="individual-modal-template">
+      <div class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
+               <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+               <div class="holder"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary pull-left" id="ok" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- Notification modal -->
+    <script type="html/template" id="notification-modal-template">
+      <div class="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
+              <button id="follow" class="close" style="margin-right:20px;"><span class="fa fa-window-maximize"></span></button>
+              <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+              <div class="holder"></div>
+            </div>
+            <div class="modal-footer hide">
+              <button type="button" class="btn btn-primary pull-left" id="ok" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+
+    <!-- CONTROLS -->
+
+    <!-- Link control template -->
+    <script type="html/template" id="link-control-template">
+      <div class="link-control">
+        <div class="input-group">
+          <div class="input-group-addon btn btn-default tree">
+            <i class="fa fa-sitemap"></i>
+          </div>
+          <textarea rows="1" class="form-control fulltext"></textarea>
+          <div class="input-group-addon btn btn-default dropdown">
+            <i class="caret"></i>
+          </div>
+          <div class="input-group-addon btn btn-default create">
+            <i class="glyphicon glyphicon-plus"></i>
+          </div>
+        </div>
+        <div class="fulltext-menu">
+          <div class="header clearfix">
+            <small class="actions pull-left">
+              <span class="select-all"></span>
+              <span class="cancel-selection"></span>
+              <span class="invert-selection"></span>
+            </small>
+            <small class="actions pull-right">
+              <span class="close-menu"></span>
+            </small>
+          </div>
+          <div class="suggestions"></div>
+        </div>
+      </div>
+    </script>
+
+    <!-- String control template -->
+    <script type="html/template" id="string-control-template">
+      <div>
+        <input type="text" class="form-control" autocomplete="on" />
+      </div>
+    </script>
+
+    <!-- Password control template -->
+    <script type="html/template" id="password-control-template">
+      <div>
+        <input type="password" class="form-control" autocomplete="on" />
+      </div>
+    </script>
+
+    <!-- Text control template -->
+    <script type="html/template" id="text-control-template">
+      <div>
+        <textarea class="form-control" rows="1" />
+      </div>
+    </script>
+
+    <!-- Multilingual string control template -->
+    <script type="html/template" id="multilingual-string-control-template">
+      <div>
+        <div class="input-group">
+          <div class="input-group-addon"><small class="language-tag"></small></div>
+          <input type="text" class="form-control" lang="" autocomplete="on" />
+        </div>
+      </div>
+    </script>
+
+    <!-- Multilingual text control template -->
+    <script type="html/template" id="multilingual-text-control-template">
+      <div>
+        <div class="input-group">
+          <div class="input-group-addon"><small class="language-tag"></small></div>
+          <textarea class="form-control" lang="" rows="1" />
+        </div>
+      </div>
+    </script>
+
+    <!-- Source code control template -->
+    <script type="html/template" id="source-control-template">
+      <div class="panel panel-default codemirror-editor"></div>
+    </script>
+
+    <!-- Datetime control template -->
+    <script type="html/template" id="datetime-control-template">
+      <div class="input-group date">
+        <div class="input-group-addon btn btn-default">
+          <span class="glyphicon glyphicon-time"></span>
+        </div>
+        <input type="text" class="form-control" />
+      </div>
+    </script>
+
+    <!-- Integer control template -->
+    <script type="html/template" id="integer-control-template">
+      <div>
+        <input type="text" class="form-control" placeholder="#" />
+      </div>
+    </script>
+
+    <!-- WorkTime control template -->
+    <script type="html/template" id="worktime-control-template">
+      <table>
+        <tbody>
+          <tr>
+            <td width="25%">
+              <div class="input-group">
+                <span class="input-group-addon">DD</span>
+                <input type="text">
+              </div>
+            </td>
+            <td width="25%">
+              <div class="input-group">
+                <span class="input-group-addon">HH</span>
+                <input type="text">
+              </div>
+            </td>
+            <td width="25%">
+              <div class="input-group">
+                <span class="input-group-addon">mm</span>
+                <input type="text">
+              </div>
+            </td>
+            <td>
+              <div class="input-group" style="width:100%">
+                <span class="input-group-addon">&sum;</span>
+                <span id="worktime-summary-text" class="text-right"></span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <input type="text" class="form-control" style="display:none"/>
+      </div>
+    </script>
+
+    <!-- Numeration control template -->
+    <script type="html/template" id="numeration-control-template">
+      <div class="input-group">
+        <div class="get-numeration-value input-group-addon btn btn-default">
+          <i class="glyphicon glyphicon-retweet"></i>
+        </div>
+        <input type="text" class="form-control" />
+      </div>
+    </script>
+
+    <!-- Decimal control template -->
+    <script type="html/template" id="decimal-control-template">
+      <div>
+        <input type="text" class="form-control" placeholder="#.#" />
+      </div>
+    </script>
+
+    <!-- Boolean control template -->
+    <script type="html/template" id="boolean-control-template">
+      <span>
+        <input type="checkbox" />
+      </span>
+    </script>
+
+    <!-- Option select control template -->
+    <script type="html/template" id="select-control-template">
+      <div>
+        <select class="form-control">
+          <option></option>
+        </select>
+      </div>
+    </script>
+
+    <!-- Checkbox control template -->
+    <script type="html/template" id="checkbox-control-template">
+      <div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" />
+          </label>
+        </div>
+      </div>
+    </script>
+
+    <!-- Radio control template -->
+    <script type="html/template" id="radio-control-template">
+      <div>
+        <div class="radio">
+          <label>
+            <input type="radio" />
+          </label>
+        </div>
+      </div>
+    </script>
+
+    <!-- File control template -->
+    <script type="html/template" id="file-control-template">
+      <div>
+        <input type="file" style="display:none"/>
+        <button class="browse btn btn-default">
+          Browse...<strong class="indicator-percentage"></strong><span class="indicator-spinner fa fa-spinner fa-pulse fa-lg fa-fw text-info" style="display:none"></span>
+        </button>
+      </div>
+    </script>
+
+    <!-- Javascript -->
+
+    <!-- Utils & UI -->
+    <script type="text/javascript" src="./js/browser/lib/promise.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/jquery.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./modules/docflow/js/browser/lib/jsplumb.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/vis.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/bootstrap-contextmenu.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/n3-browser.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/FileSaver.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/autosize.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/locale/ru.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/jquery.touchSwipe.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/jszip.min.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/marked.min.js"></script>
+
+    <!-- CodeMirror -->
+    <script type="text/javascript" src="./js/browser/lib/codemirror/codemirror.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/mode/css/css.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/mode/turtle/turtle.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/addon/edit/closebrackets.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/addon/edit/closetag.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/addon/edit/matchbrackets.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/addon/edit/matchtags.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/addon/fold/xml-fold.js"></script>
+    <script type="text/javascript" src="./js/browser/lib/codemirror/addon/display/fullscreen.js"></script>
+
+    <!-- Veda browser & server -->
+    <script type="text/javascript" src="./js/common/lib/riot.js"></script>
+    <script type="text/javascript" src="./js/common/lib/sha256.js"></script>
+    <script type="text/javascript" src="./js/common/veda_spa.js"></script>
+    <script type="text/javascript" src="./js/common/util.js"></script>
+    <script type="text/javascript" src="./js/common/app_model.js"></script>
+    <script type="text/javascript" src="./js/common/individual_model.js"></script>
+    <script type="text/javascript" src="./js/common/user_model.js"></script>
+    <script type="text/javascript" src="./js/common/ontology_model.js"></script>
+    <script type="text/javascript" src="./js/common/numerator.js"></script>
+
+    <!-- Veda browser only -->
+    <script type="text/javascript" src="./js/browser/update_service.js"></script>
+    <script type="text/javascript" src="./js/browser/notify.js"></script>
+    <script type="text/javascript" src="./js/browser/local_db.js"></script>
+    <script type="text/javascript" src="./js/browser/backend.js"></script>
+    <script type="text/javascript" src="./js/browser/util.js"></script>
+    <script type="text/javascript" src="./js/browser/veda_controls.js"></script>
+    <script type="text/javascript" src="./js/browser/table_sortable.js"></script>
+    <script type="text/javascript" src="./js/browser/individual_presenter.js"></script>
+    <script type="text/javascript" src="./modules/docflow/js/browser/veda_workflow_editor.js"></script>
+    <script type="text/javascript" src="./js/browser/app_presenter.js"></script>
+    <script type="text/javascript" src="./js/browser/auth.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        veda.Module({/* configuration object */});
+      });
+    </script>
+    <script type="text/javascript">
+      // Bootstrap multiple modals fix
+      // origin: http://stackoverflow.com/questions/19305821/multiple-modals-overlay
+      $(document).on("click", ".modal #follow", function () {
+        var modal = $(this).closest(".modal");
+        var resourceTemplate = modal.find("[resource]").first();
+        var uri = resourceTemplate.attr("resource");
+        var mode = resourceTemplate.data("mode");
+        modal.modal("hide");
+        riot.route( ["#", uri, "#main", undefined, mode].join("/") );
+      });
+      $(document).on({
+        'show.bs.modal': function () {
+          var zIndex = 1040 + (10 * $('.modal:visible').length);
+          $(this).css('z-index', zIndex);
+          setTimeout(function() {
+            $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+          }, 0);
+        },
+        'hidden.bs.modal': function() {
+          if ($('.modal:visible').length > 0) {
+            // restore the modal-open class to the body element, so that scrolling works
+            // properly after de-stacking a modal.
+            setTimeout(function() {
+              $(document.body).addClass('modal-open');
+            }, 0);
+          }
+        }
+      }, '.modal');
+    </script>
+    <script>
+      var $buoop = {
+        vs:{i:10,f:39.0,o:11.5,s:8.0},
+        c:2,
+          //vs: {i:11,f:40.0,o:11.60,s:8.1,c:43.0},
+          reminder: 0
+      };
+      function $buo_f()
+      {
+        var e = document.createElement("script");
+        e.src = "/js/browser/lib/update.min.js";
+        document.body.appendChild(e);
+      };
+      try
+      {
+        document.addEventListener("DOMContentLoaded", $buo_f,false)
+      } catch(e) { window.attachEvent("onload", $buo_f) }
+    </script>
+  </body>
+</html>
