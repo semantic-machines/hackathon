@@ -76,7 +76,10 @@ lng:MapModel
         '<div class="list-objects">',
           '{% for geoObject in properties.geoObjects %}',
             '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
-              '<a class="list-group-item no-border" href="{{geoObject.properties.id}}" style="color:{{geoObject.options.iconColor}}">{{ geoObject.properties.label|raw }}</a>',
+              '<a class="list-group-item no-border" href="{{geoObject.properties.id}}">',
+                '<img class="img-circle" src="/img/{{geoObject.properties.itemIcon}}.svg">',
+                '<span>{{ geoObject.properties.label|raw }}</span>',
+              '</a>',
             '{% endif %}',
           '{% endfor %}',
         '</div>',
@@ -91,6 +94,7 @@ lng:MapModel
       self.pointsCollection = new ymaps.Clusterer({});
       self.pointsCollection.createCluster = function (center, geoObjects) {
         var clusterPlacemark = ymaps.Clusterer.prototype.createCluster.call(this, center, geoObjects);
+        var usingIcon;
         var weights = geoObjects.reduce(function(result, current) {
           var individ = current.properties.get("individual");
           if (individ.hasValue("rdf:type", "lng:LngDemand")) {
@@ -100,11 +104,12 @@ lng:MapModel
           } else {
             result[2] = ++result[2];
           }
+          if (result[2] === 1) usingIcon = current.properties.get("itemIcon");
           return result;
         }, [0, 0, 0]);
         var outerRadius = 18;
         if (weights[2] === 1) {
-          weights[2] = "<span style='color:#888888' class='glyphicon glyphicon-oil'></span>";
+          weights[2] = "<img class='img-circle' style='height: 20px;width:20px;color:#888888' src='/img/" + usingIcon + ".svg'>";
         } else {
           outerRadius = outerRadius + 2 * Math.log(weights[2]);
         }
@@ -203,7 +208,7 @@ lng:MapModel
       center = self.map.getCenter();
     };
     if (!radius) {
-      radius = self.getMapDiagonalRadius();
+      radius = self.getMapRadius();
     };
     var query;
     if (queryString) {
@@ -214,7 +219,7 @@ lng:MapModel
       //query = veda.Backend.geo_radius(center[0], center[1], radius);
     }
     return query.then(function(result) {
-      console.log(result);
+      //console.log(result);
       var promises = result.map(function(uri) {
         return new veda.IndividualModel(uri).load();
       })
@@ -225,11 +230,16 @@ lng:MapModel
     });
   };
 
-  this.getMapDiagonalRadius = function() {
-    var center = self.map.getCenter();
-    var corner = self.map.getBounds()[1];
-    var partial = Math.pow((corner[0] - center[0]), 2) + Math.pow((corner[1] - center[1]), 2);
-    return Math.sqrt(partial)*111000;
+  this.getMapRadius = function() {
+    // var center = self.map.getCenter();
+    // var corner = self.map.getBounds()[1];
+    // var partial = Math.pow((corner[0] - center[0]), 2) + Math.pow((corner[1] - center[1]), 2);
+    // console.log(Math.sqrt(partial));
+    var corners = self.map.getBounds();
+    var yLength = corners[1][0] - corners[0][0];
+    var xLength = corners[1][1] - corners[0][1];
+    var partial = (xLength > yLength? xLength : yLength)/2;
+    return partial*111000;
   };
 
   this.getMap = function() {
@@ -244,10 +254,13 @@ lng:MapModel
     var coord = [individ["v-s:latitude"][0], individ["v-s:longitude"][0]];
     var icon;
     var iconColor = "#17a2b8";
+    var itemIcon = "stationaryStation";
     if (individ.hasValue("rdf:type", "lng:StationaryFillingStation")) {
       icon = "islands#fuelStationCircleIcon";
+      itemIcon = "stationaryStation";
     } else if (individ.hasValue("rdf:type", "lng:MobileFillingStation")) {
       icon = "islands#deliveryCircleIcon";
+      itemIcon = "mobileStation";
     } else if (individ.hasValue("rdf:type", "lng:LngDemand")) {
       icon = "islands#circleIcon";
       iconColor = "#28a745";
@@ -261,10 +274,11 @@ lng:MapModel
       "id": individ.id,
       "type": individ["rdf:type"][0].id,
       "label": individ["rdf:type"][0],
-      "individual": individ
+      "individual": individ,
+      "itemIcon": itemIcon
     }, {
       preset: icon,
-      iconColor: iconColor
+      iconColor: iconColor,
     });
     
   };
@@ -318,7 +332,7 @@ lng:MapTemplate
       contentHeader: '<div class="btn-group"><button id="add-NewObject" class="btn btn-sm btn-primary">Добавить объект</button><button id="add-NewDemand" class="btn btn-sm btn-default">Добавить спрос</button></div>'
     }).then(function(result) {
       $("#add-NewObject",template).click(function(){
-        addNewPoint(coords);
+        addNewPoint("", coords);
         // var myPlacemark = new ymaps.Placemark(coords, {}, {
         //   preset: "islands#medicalCircleIcon",
         //   iconColor: "#28a745"
