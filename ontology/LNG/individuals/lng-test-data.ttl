@@ -401,6 +401,7 @@ d:testLngStation6Demand_7
   v-s:longitude "50.806036"^^xsd:decimal ; 
   v-s:parentOrganization  d:org_RU1653019048 ;
   v-s:hasStatus lng:StatusInOperation ;  
+  v-s:created "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
 . 
 
 d:testLngStation7
@@ -840,6 +841,7 @@ d:testLngStation16Demand_3
   v-s:longitude "30.3258277"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusInOperation ; 
+  v-s:created "2020-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 
 d:testLngStation17
@@ -892,7 +894,8 @@ d:testLngStation17Demand_3
   v-s:latitude "59.827105"^^xsd:decimal ;
   v-s:longitude "30.418064"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7713727881 ;
-  v-s:hasStatus lng:StatusInOperation ; 
+  v-s:hasStatus lng:StatusInOperation ;
+  v-s:created "2019-01-01T00:00:00.000Z"^^xsd:dateTime; 
 .
 
 d:testLngStation18
@@ -945,6 +948,7 @@ d:testLngStation18Demand_3
   v-s:latitude "59.827105"^^xsd:decimal ;
   v-s:longitude "30.418064"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7723826955 ;
+  v-s:created "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
   v-s:hasStatus lng:StatusInOperation ; 
 .
 
@@ -999,6 +1003,7 @@ d:testLngStation19Demand_3
   v-s:longitude "30.245729"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7723826955 ;
   v-s:hasStatus lng:StatusDecided ; 
+  v-s:created "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 
 d:testLngStation20
@@ -1094,6 +1099,7 @@ d:testLngStation22Demand_3
   v-s:longitude "61.1315"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusUnderDiscussion ; 
+  v-s:dateFromPlan "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 
 d:testLngStation23
@@ -1147,6 +1153,7 @@ d:testLngStation23Demand_3
   v-s:longitude "28.595385"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusInOperation ; 
+  v-s:created "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 
 d:testLngStation24
@@ -1190,6 +1197,7 @@ d:testLngStation24Demand_2
   v-s:longitude "28.628323"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7713727881 ;
   v-s:hasStatus lng:StatusInOperation ; 
+  v-s:created "2017-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 
 d:testLngStation25
@@ -1277,6 +1285,7 @@ d:testLngStation26Demand_3
   v-s:longitude "34.437225313492"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7724261610 ;
   v-s:hasStatus lng:StatusInOperation ; 
+  v-s:created "2018-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 
 d:testLngStation27
@@ -1330,6 +1339,7 @@ d:testLngStation27Demand_3
   v-s:longitude "34.437225313492"^^xsd:decimal ;
   v-s:parentOrganization d:org_RU7715356456 ;
   v-s:hasStatus lng:StatusInOperation ; 
+  v-s:dateFromPlan "2019-01-01T00:00:00.000Z"^^xsd:dateTime;
 .
 #-------------------------мобильные станции
 d:testLngMobileStation1
