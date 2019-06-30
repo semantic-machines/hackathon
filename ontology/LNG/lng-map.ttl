@@ -77,7 +77,7 @@ lng:MapModel
           '{% for geoObject in properties.geoObjects %}',
             '{% if geoObject.properties.type != "lng:LngDemand" && geoObject.properties.type != "lng:LngSupply" %}',
               '<a class="list-group-item no-border" href="{{geoObject.properties.id}}">',
-                '<img class="img-circle" src="/img/{{geoObject.properties.itemIcon}}.svg">',
+                '<img class="img-circle" style="color:{{geoObject.properties.itemIconColor}};" src="/img/{{geoObject.properties.itemIcon}}.svg">',
                 '<span>{{ geoObject.properties.label|raw }}</span>',
               '</a>',
             '{% endif %}',
@@ -254,13 +254,18 @@ lng:MapModel
     var coord = [individ["v-s:latitude"][0], individ["v-s:longitude"][0]];
     var icon;
     var iconColor = "#17a2b8";
+    var colors = {"primary": "#337ab7","success": "#f0ad4e","default": "#777"};
     var itemIcon = "stationaryStation";
     if (individ.hasValue("rdf:type", "lng:StationaryFillingStation")) {
       icon = "islands#fuelStationCircleIcon";
       itemIcon = "stationaryStation";
+      iconColor = colors[individ["v-s:hasStatus"][0]["v-s:tag"][0]];
+      console.log(iconColor);
     } else if (individ.hasValue("rdf:type", "lng:MobileFillingStation")) {
       icon = "islands#deliveryCircleIcon";
       itemIcon = "mobileStation";
+      iconColor = colors[individ["v-s:hasStatus"][0]["v-s:tag"][0]];
+      console.log(iconColor);
     } else if (individ.hasValue("rdf:type", "lng:LngDemand")) {
       icon = "islands#circleIcon";
       iconColor = "#28a745";
@@ -275,7 +280,8 @@ lng:MapModel
       "type": individ["rdf:type"][0].id,
       "label": individ["rdf:type"][0],
       "individual": individ,
-      "itemIcon": itemIcon
+      "itemIcon": itemIcon,
+      "itemIconColor": iconColor
     }, {
       preset: icon,
       iconColor: iconColor,
@@ -333,11 +339,6 @@ lng:MapTemplate
     }).then(function(result) {
       $("#add-NewObject",template).click(function(){
         addNewPoint("", coords);
-        // var myPlacemark = new ymaps.Placemark(coords, {}, {
-        //   preset: "islands#medicalCircleIcon",
-        //   iconColor: "#28a745"
-        // });
-        // map.geoObjects.add(myPlacemark);
         map.balloon.close();
       });
       $("#add-NewDemand",template).click(function(){
