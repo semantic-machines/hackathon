@@ -96,7 +96,7 @@ lng:StationaryFillingStationTemplate
         </div>
         <div class="col-sm-9 col-xs-7">
           <div property="v-s:latitude" class="view -edit -search"></div>
-          <veda-control data-type="text" property="v-s:latitude" class="-view edit search"></veda-control>
+          <veda-control data-type="decimal" property="v-s:latitude" class="-view edit search"></veda-control>
         </div>
       </div>
       <div class="row row-attribute">
@@ -105,7 +105,7 @@ lng:StationaryFillingStationTemplate
         </div>
         <div class="col-sm-9 col-xs-7">
           <div property="v-s:longitude" class="view -edit -search"></div>
-          <veda-control data-type="text" property="v-s:longitude" class="-view edit search"></veda-control>
+          <veda-control data-type="decimal" property="v-s:longitude" class="-view edit search"></veda-control>
         </div>
       </div>
       <div class="row row-attribute">
@@ -256,6 +256,8 @@ lng:StationaryFillingStationTemplate
     Supply["v-s:backwardProperty"] = [new veda.IndividualModel("lng:hasSupply")];
     Supply["v-s:canRead"] = [true];
     Supply["v-s:hasStatus"] = [new veda.IndividualModel("lng:StatusInOperation")];
+    Supply["v-s:latitude"] = individual["v-s:latitude"];;
+    Supply["v-s:longitude"] = individual["v-s:longitude"];;
     Supply.one("afterReset", function () {
       modal.modal("hide").remove();
     });

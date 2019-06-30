@@ -81,7 +81,7 @@ lng:LngSupplyTemplate
         </div>
         <div class="col-sm-9 col-xs-7">
           <div property="v-s:latitude" class="view -edit -search"></div>
-          <veda-control data-type="text" property="v-s:latitude" class="-view edit search"></veda-control>
+          <veda-control data-type="decimal" property="v-s:latitude" class="-view edit search"></veda-control>
         </div>
       </div>
       <div class="row row-attribute">
@@ -90,7 +90,7 @@ lng:LngSupplyTemplate
         </div>
         <div class="col-sm-9 col-xs-7">
           <div property="v-s:longitude" class="view -edit -search"></div>
-          <veda-control data-type="text" property="v-s:longitude" class="-view edit search"></veda-control>
+          <veda-control data-type="decimal" property="v-s:longitude" class="-view edit search"></veda-control>
         </div>
       </div>
       <div class="row row-attribute">
