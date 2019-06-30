@@ -12,6 +12,6 @@ echo INSTALL HACKATON PROJECT
 wget https://github.com/semantic-machines/hackathon/archive/master.zip
 unzip master.zip
 rm master.zip
-cp -y hackathon-master/public/index.html public
-cp -y hackathon-master/ontology/config.ttl ontology
-cp -y -r hackathon-master/ontology/LNG ontology
+cp hackathon-master/public/index.html public
+cp hackathon-master/ontology/config.ttl ontology
+cp -r hackathon-master/ontology/LNG ontology
