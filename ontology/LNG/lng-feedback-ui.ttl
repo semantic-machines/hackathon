@@ -1,0 +1,67 @@
+@prefix d: <http://semantic-machines.com/veda/veda-data/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix v-s: <http://semantic-machines.com/veda/veda-schema/> .
+@prefix v-ui: <http://semantic-machines.com/veda/veda-ui/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix v-wf: <http://semantic-machines.com/veda/veda-workflow/> .
+@prefix cfg: <http://semantic-machines.com/veda/config/> .
+@prefix v-fc: <http://semantic-machines.com/veda/veda-function-create/> .
+@prefix lng: <http://semantic-machines.com/veda/lng-schema/> .
+
+<http://semantic-machines.com/veda/lng-feedback-ui>
+  rdf:type owl:Ontology ;
+  rdfs:label "Онтология. Обратная связь. UI"@ru ;
+  rdfs:label "Ontology. Feedback. UI"@en ;
+  v-s:loadPriority 20 ;
+.
+
+#---------------------------------------------------------
+lng:FeedbackBlank
+  a v-fc:Blank ;
+  rdfs:label "Обратная связь"@ru ;
+  rdfs:label "Feedback"@en ;
+  v-fc:targetType lng:Feedback ;
+.
+
+#--------------------------------------
+lng:FeedbackTemplate
+  rdf:type v-ui:ClassTemplate ;
+  v-ui:forClass lng:AccessRequest ;
+  rdfs:label "Template for lng:Feedback"@en ;
+  rdfs:label "Шаблон для класса lng:Feedback"@ru ;
+  v-ui:template """
+<div>
+  <div class="container sheet">
+    <h3 class="margin-sm">
+      <span about="@" property="rdf:type"></span>
+      <small about="@" property="rdfs:label" class="view edit -search"></small>
+    </h3>
+    <div class="row row-attribute">
+      <div class="col-sm-3 col-xs-5">
+        <label about="v-s:initiator" property="rdfs:label"></label>
+      </div>
+      <div class="col-sm-9 col-xs-7">
+        <div property="v-s:initiator" class="view -edit search"></div>
+        <veda-control property="v-s:initiator" data-type="text" class="-view edit search"></veda-control>
+      </div>
+    </div>
+    <div class="row row-attribute">
+      <div class="col-sm-3 col-xs-5">
+        <label about="v-s:description" property="rdfs:label"></label>
+      </div>
+      <div class="col-sm-9 col-xs-7">
+        <div property="v-s:description" class="view -edit search"></div>
+        <veda-control property="v-s:description" data-type="text" class="-view edit search"></veda-control>
+      </div>
+    </div>
+  <hr>
+  <!-- BUTTONS -->
+  <div class="actions view edit -search">
+    <span about="@" data-template="v-ui:StandardButtonsTemplate" data-embedded="true" data-buttons="edit save cancel delete"></span>
+  </div>
+</div>
+</div>
+"""
+.
