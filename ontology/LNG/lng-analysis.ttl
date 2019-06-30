@@ -251,29 +251,42 @@ lng:DevelopmentChartTemplate
         chart.update();
       }
 
-      var baseYear = 2017;
-      var years = 5;
       function calcData(individuals) {
-        return individuals.reduce(function (acc, item) {
-          var created = item.hasValue("v-s:created") ? item["v-s:created"][0].getFullYear() - baseYear : undefined;
-          var plan = item.hasValue("v-s:dateFromPlan") ? item["v-s:dateFromPlan"][0].getFullYear() - baseYear : undefined;
-          var fact = item.hasValue("v-s:dateFrom") ? item["v-s:dateFrom"][0].getFullYear() - baseYear : undefined;
+        var baseYear = 2017;
+        var years = 5;
+        var facts = 0, plans = 0, expects = 0, other = 0;
+        var result = individuals.reduce(function (acc, item) {
+          var created = item.hasValue("v-s:created") ? item["v-s:created"][0].getFullYear() : undefined;
+          var plan = item.hasValue("v-s:dateFromPlan") ? item["v-s:dateFromPlan"][0].getFullYear() : undefined ;
+          var fact = item.hasValue("v-s:dateFrom") ? item["v-s:dateFrom"][0].getFullYear() : undefined;
           var amount = item.hasValue("v-s:amount") ? item["v-s:amount"][0] : 0;
           
           var i;
           if (created && !plan && !fact) {
-            acc[2][created] = (acc[2][created] || 0) + amount;
+            for (i = created - baseYear; i < years; i++) {
+              acc[2][i] = (acc[2][i] || 0) + amount;
+            }
+            expects++;
           } else if (fact) {
-            for (i = fact; i < years; i++) {
+            for (i = fact - baseYear; i < years; i++) {
               acc[0][i] = (acc[0][i] || 0) + amount;
             }
+            facts++;
           } else if (plan && !fact) {
-            for (i = plan; i < years; i++) {
+            for (i = plan - baseYear; i < years; i++) {
               acc[1][i] = (acc[1][i] || 0) + amount;
             }
+            plans++;
+          } else {
+            console.log("Other", JSON.stringify(item.properties));
+            other++;
           }
           return acc;
         }, [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]); // [fact, plan, expect]
+        
+        console.log("facts = %s, plans = %s, expects = %s, other = %s", facts, plans, expects, other);
+        
+        return result;
       }
     });
 
