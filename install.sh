@@ -7,11 +7,12 @@ cd install-tools
 echo INSTALL DBs
 ./install-dbs.sh
 echo INSTALL HAPROXY
+sudo cp -v haproxy.cfg /etc/haproxy
 ./install-haproxy.sh
 cd ..
 echo START VEDA
 ./control-start.sh
-pause 30
+pause 60
 echo INSTALL HACKATON PROJECT
 wget https://github.com/semantic-machines/hackathon/archive/master.zip
 unzip master.zip
