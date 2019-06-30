@@ -255,6 +255,7 @@ lng:StationaryFillingStationTemplate
     Supply["v-s:backwardTarget"] = [individual];
     Supply["v-s:backwardProperty"] = [new veda.IndividualModel("lng:hasSupply")];
     Supply["v-s:canRead"] = [true];
+    Supply["v-s:hasStatus"] = [new veda.IndividualModel("lng:StatusInOperation")];
     Supply.one("afterReset", function () {
       modal.modal("hide").remove();
     });
