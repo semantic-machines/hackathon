@@ -108,10 +108,12 @@ lng:MapModel
           return result;
         }, [0, 0, 0]);
         var outerRadius = 18;
-        if (weights[2] === 1) {
+        if (weights[2] === 0) {
+          weights[2] = "<img class='img-circle' style='height: 20px;width:20px;color:#888888' src='/img/demand.svg'>";
+        } else if (weights[2] === 1) {
           weights[2] = "<img class='img-circle' style='height: 20px;width:20px;color:#888888' src='/img/" + usingIcon + ".svg'>";
         } else {
-          outerRadius = outerRadius + 2 * Math.log(weights[2]);
+          outerRadius = outerRadius + 2*Math.log(weights[2]);
         }
         var innerRadius = outerRadius - 5;
         if ( (weights[0] || weights[1]) ) {
@@ -144,25 +146,6 @@ lng:MapModel
           var modal = veda.Util.showModal(new veda.IndividualModel(objectUri), undefined, "view");
         })
       });
-      // self.pointsCollection.events.add(['mouseenter', 'mouseleave'], function (e) {
-      //   var target = e.get('target');
-      //   var type = e.get('type');
-      //   if (typeof target.getGeoObjects != 'undefined') {
-      //     // Событие произошло на кластере.
-      //     if (type == 'mouseenter') {
-      //         target.options.set('preset', 'islands#invertedPinkClusterIcons');
-      //     } else {
-      //         target.options.set('preset', 'islands#invertedVioletClusterIcons');
-      //     }
-      //   } else {
-      //     // Событие произошло на геообъекте.
-      //     if (type == 'mouseenter') {
-      //         target.options.set('preset', 'islands#pinkIcon');
-      //     } else {
-      //         target.options.set('preset', 'islands#violetIcon');
-      //     }
-      //   }
-      // });
 
       self.pointsCollection.events.add("click", function(e) {
         var target = e.get("target");
@@ -260,12 +243,10 @@ lng:MapModel
       icon = "islands#fuelStationCircleIcon";
       itemIcon = "stationaryStation";
       iconColor = colors[individ["v-s:hasStatus"][0]["v-s:tag"][0]];
-      console.log(iconColor);
     } else if (individ.hasValue("rdf:type", "lng:MobileFillingStation")) {
       icon = "islands#deliveryCircleIcon";
       itemIcon = "mobileStation";
       iconColor = colors[individ["v-s:hasStatus"][0]["v-s:tag"][0]];
-      console.log(iconColor);
     } else if (individ.hasValue("rdf:type", "lng:LngDemand")) {
       icon = "islands#circleIcon";
       iconColor = "#28a745";
