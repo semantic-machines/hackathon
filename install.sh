@@ -2,9 +2,9 @@ echo INSTALL VEDA
 wget https://github.com/semantic-machines/veda/releases/download/v5.4.6/Veda-x86_64.AppImage
 chmod u+x Veda-x86_64.AppImage
 ./Veda-x86_64.AppImage
-cd /install-tools
-./install-tools/install-dbs.sh
-./install-tools/install-haproxy.sh
+cd install-tools
+./install-dbs.sh
+./install-haproxy.sh
 cd ..
 cp public/index.html 
 ./control-start.sh
