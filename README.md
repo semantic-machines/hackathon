@@ -1,8 +1,8 @@
 Проект команды  "Смысловые машины" для конкурса "Цифровой прорыв" https://цифровойпрорыв.рф/
 
-установка и запуск:
+протестированно на linux ubuntu 18.04 64bit
 
-Linux ubuntu 18.04:
+установка и запуск:
 
 1. создать папку hackathon (название папки не фиксированно и может быть иным) и зайти в нее
 2. выполнить команду: curl https://raw.githubusercontent.com/semantic-machines/hackathon/master/install.sh -sSf | sh
